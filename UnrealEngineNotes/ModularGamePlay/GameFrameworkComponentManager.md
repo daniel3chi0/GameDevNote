@@ -1,0 +1,2 @@
+UGameFrameworkComponentManager是Unreal中属于ModularGamePlay这个引擎插件中的一部分。该类是GameInstanceSubsystem的子类。可以和[[GameFeature]]一起使用。GameFeature大钊在知乎上有专门的专栏介绍。
+UGameFrameworkComponentManager中

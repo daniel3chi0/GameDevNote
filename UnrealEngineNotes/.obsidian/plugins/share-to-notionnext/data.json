@@ -1,0 +1,33 @@
+{
+  "NextButton": true,
+  "notionAPINext": "",
+  "databaseIDNext": "",
+  "bannerUrl": "",
+  "notionUser": "talented-runner-bd6",
+  "NotionLinkDisplay": true,
+  "proxy": "",
+  "GeneralButton": true,
+  "tagButton": true,
+  "customTitleButton": false,
+  "customTitleName": "",
+  "notionAPIGeneral": "",
+  "databaseIDGeneral": "",
+  "CustomButton": false,
+  "CustomValues": "",
+  "notionAPICustom": "",
+  "databaseIDCustom": "",
+  "databaseDetails": {
+    "TN": {
+      "format": "general",
+      "fullName": "ToNotion",
+      "abName": "TN",
+      "notionAPI": "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",
+      "databaseID": "2cba95db5cc38085ad65f7513e36fa2d",
+      "tagButton": true,
+      "customTitleButton": false,
+      "customTitleName": "",
+      "customProperties": [],
+      "saved": true
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "autoupdateFileView": true,
+  "suspendUpdateByClickingView": true,
+  "autoupdateFolderView": false,
+  "showFiles": {
+    "main": true,
+    "outgoing": true,
+    "backlink": true
+  },
+  "showElements": {
+    "heading": true,
+    "link": false,
+    "tag": true,
+    "listItems": true,
+    "task": true
+  },
+  "maxHeadingLevel": 6,
+  "hideLinksBetweenRelatedFiles": "none",
+  "allRootItems": false,
+  "allTasks": true,
+  "taskOnly": false,
+  "hideCompletedTasks": false,
+  "displayFileInfo": "lines",
+  "viewPosition": "right",
+  "inlinePreview": true,
+  "tooltipPreview": true,
+  "tooltipPreviewDirection": "left",
+  "wordsToExtract": "",
+  "icon": {
+    "heading": "none",
+    "link": "link",
+    "tag": "tag",
+    "listItems": "list",
+    "note": "file",
+    "task": "square",
+    "taskDone": "check-square",
+    "backlink": "links-coming-in"
+  },
+  "customIcon": {
+    "heading": "hash",
+    "link": "link",
+    "tag": "tag",
+    "listItems": "list",
+    "note": "file",
+    "task": "square",
+    "taskDone": "check-square",
+    "backlink": "links-coming-in"
+  },
+  "indent": {
+    "heading": true,
+    "link": true,
+    "tag": true,
+    "listItems": true
+  },
+  "indentFollowHeading": 2,
+  "prefix": {
+    "heading": "",
+    "link": "",
+    "tag": "",
+    "listItems": "",
+    "task": "",
+    "taskDone": "",
+    "backlink": ""
+  },
+  "repeatHeadingPrefix": "none",
+  "addCheckboxText": false,
+  "hideDuplicated": true,
+  "readLimit": 50,
+  "processLimit": 100,
+  "noteTitleBackgroundColor": "accent",
+  "customNoteTitleBackgroundColor": {
+    "light": "#BEBEBE",
+    "dark": "#4E4E4E"
+  },
+  "customNoteTitleBackgroundColorHover": {
+    "light": "#AEAEAE",
+    "dark": "#5E5E5E"
+  },
+  "tagsAOT": [],
+  "showBacklinks": true,
+  "relatedFiles": {},
+  "openAtStartup": {
+    "file": false,
+    "folder": false
+  },
+  "collapseFolder": true,
+  "sortType": "alphabetAscending",
+  "showDebugInfo": false,
+  "collapseAllAtStartup": false,
+  "showPropertyLinks": true,
+  "recent": {
+    "file": [
+      "Animations/LearnALSV4/LayerBlending.md",
+      "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md",
+      "Animations/LearnALSV4/AnimationLayer动画层.md",
+      "Animations/LearnALSV4/Animation Slot.md",
+      "Animations/LearnALSV4/Animation Montage.md",
+      "Animations/LearnALSV4/Animation Montage Media/1.png",
+      "GameFeature.md",
+      "ModularGamePlay/GameFrameworkComponentManager.md",
+      "Animations/LearnALSV4/手持道具到OverlayLayer.md",
+      "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
+      "Animations/LearnALSV4/LayerBlending层混合Media/3.png",
+      "Animations/LearnALSV4/Aim Offset瞄准偏移.md",
+      "Animations/LearnALSV4/叠加动画.md",
+      "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
+      "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
+      "Animations/LearnALSV4/动画层接口.md"
+    ],
+    "folder": []
+  },
+  "favorite": {
+    "file": [],
+    "folder": []
+  },
+  "numOfRecentFiles": 30,
+  "pinAfterJump": true,
+  "openRecentAtStartup": {
+    "file": false,
+    "folder": false
+  },
+  "popoutSize": {
+    "width": 600,
+    "height": 800
+  },
+  "popoutAlwaysOnTop": false,
+  "openLinkByClick": false,
+  "hideMinor2hopLink": false,
+  "dispListCallouts": true,
+  "saveRecentView": true,
+  "wrapLine": false,
+  "bootDelayTime": 300
+}
