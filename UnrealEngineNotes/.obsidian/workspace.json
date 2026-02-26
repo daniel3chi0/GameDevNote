@@ -10,7 +10,7 @@
           {
             "id": "f2a16773e4a76405",
             "type": "tabs",
-            "dimension": 30.392156862745097,
+            "dimension": 25.49019607843137,
             "children": [
               {
                 "id": "89f39f6258bcc743",
@@ -46,7 +46,7 @@
           {
             "id": "1fd9fbf8ee56e33a",
             "type": "tabs",
-            "dimension": 69.6078431372549,
+            "dimension": 74.50980392156863,
             "children": [
               {
                 "id": "6d2b96add3d1dff6",
@@ -94,10 +94,26 @@
                 "id": "c1665ea5071d03df",
                 "type": "leaf",
                 "state": {
-                  "type": "graph",
-                  "state": {},
-                  "icon": "lucide-git-fork",
-                  "title": "Graph view"
+                  "type": "markdown",
+                  "state": {
+                    "file": "Animations/LearnALSV4/LayerBlending.md",
+                    "mode": "source",
+                    "source": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "LayerBlending"
+                }
+              },
+              {
+                "id": "7af6fbc3b320a4f5",
+                "type": "leaf",
+                "state": {
+                  "type": "image",
+                  "state": {
+                    "file": "Animations/LearnALSV4/VIrtual Bones Media/1.png"
+                  },
+                  "icon": "lucide-image",
+                  "title": "1"
                 }
               },
               {
@@ -114,14 +130,18 @@
                 "id": "c7c5e38079d0930e",
                 "type": "leaf",
                 "state": {
-                  "type": "graph",
-                  "state": {},
-                  "icon": "lucide-git-fork",
-                  "title": "Graph view"
+                  "type": "markdown",
+                  "state": {
+                    "file": "GameFeature.md",
+                    "mode": "source",
+                    "source": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "GameFeature"
                 }
               }
             ],
-            "currentTab": 3
+            "currentTab": 6
           }
         ],
         "direction": "horizontal"
@@ -156,7 +176,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "虚拟骨骼",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -244,16 +264,17 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Animations/LearnALSV4/Virtual Bones.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Virtual Bones"
             }
           },
           {
-            "id": "32e5f47934ad1c27",
+            "id": "9d675faadbb343e5",
             "type": "leaf",
             "state": {
               "type": "multiple-notes-outline",
@@ -267,7 +288,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 240.5
+    "width": 360.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -281,13 +302,27 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c1665ea5071d03df",
+  "active": "c7c5e38079d0930e",
   "lastOpenFiles": [
-    "Animations/LearnALSV4/LayerBlending.md",
+    "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
+    "Animations/LearnALSV4/VIrtual Bones Media/1.png",
+    "GameFeature.md",
+    "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
+    "Animations/LearnALSV4/IK和FK.md",
     "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md",
-    "Animations/LearnALSV4/AnimationLayer动画层.md",
+    "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
+    "Animations/LearnALSV4/重定向动画.md",
+    "Animations/LearnALSV4/LayerBlending.md",
+    "虚拟骨骼.md",
+    "Animations/LearnALSV4/叠加动画.md",
+    "Animations/LearnALSV4/VIrtual Bones Media",
+    "Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
+    "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
+    "Animations/LearnALSV4/同步组设置.md",
+    "Animations/LearnALSV4/手持道具到OverlayLayer.md",
     "Animations/LearnALSV4/Animation Slot.md",
     "Animations/LearnALSV4/Animation Montage.md",
+    "Animations/LearnALSV4/AnimationLayer动画层.md",
     "Animations/LearnALSV4/Animation Montage Media/6.png",
     "Animations/LearnALSV4/Animation Montage Media/5.png",
     "Animations/LearnALSV4/Animation Montage Media/4.png",
@@ -297,18 +332,11 @@
     "Animations/LearnALSV4/Animation Montage Media/1.png",
     "Animations/LearnALSV4/Animation Montage Media",
     "Pasted image 20260126234133.png",
-    "GameFeature.md",
     "Animations/LearnALSV4/LayerBlending层混合Media/21.png",
-    "Animations/LearnALSV4/LayerBlending层混合Media/20.png",
     "ModularGamePlay/GameFrameworkComponentManager.md",
     "ModularGamePlay",
-    "Animations/LearnALSV4/手持道具到OverlayLayer.md",
-    "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
     "Animations/LearnALSV4/Aim Offset瞄准偏移.md",
-    "Animations/LearnALSV4/叠加动画.md",
     "Animations/LearnALSV4/LayerBlending层混合Media/4.png.md",
-    "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
-    "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
     "Animations/LearnALSV4/动画层接口.md",
     "Animations/LearnALSV4/LayerBlending层混合Media",
     "Test/OB2NotionT1.md",
@@ -318,13 +346,8 @@
     "Animations/LearnALSV4/手持道具Media",
     "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图动态复用Media",
     "Animations/LearnALSV4/ALSV4站立和蹲下状态.md",
-    "Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
-    "Animations/LearnALSV4/同步组设置.md",
     "Animations/LearnALSV4/AimOffset瞄准偏移Media",
     "Animations/LearnALSV4/同步组设置Media",
-    "Animations/LearnALSV4/叠加动画Media",
-    "内部使用Int混合姿势节点进行混合.md",
-    "Excalidraw",
-    "Welcome.md"
+    "Animations/LearnALSV4/叠加动画Media"
   ]
 }

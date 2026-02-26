@@ -4,13 +4,13 @@
 # LayerBlending的输入
 LayerBlending有三个输入：BaseLayer，OverlayLayer，BasePoses。
 
-1. OverlayLayer的输出可以看做是一段动画序列Pose。
-[[手持道具到OverlayLayer#^b72a56]]
+1. OverlayLayer的输出可以看做是一段动画序列Pose。[[手持道具到OverlayLayer#^b72a56]]
+   
 2. BasePose的内容就是一些Locomotion，所以逻辑上输出也可以看做是一段序列Pose。
-![[Animations/LearnALSV4/LayerBlending层混合Media/1.png]]
+   ![[Animations/LearnALSV4/LayerBlending层混合Media/1.png]]
 
 3. BasePose这个Layer输出的是个静态单帧Pose，根据曲线来显示选择Pose[[手持道具到OverlayLayer#^0ef9f7]]
-![[Animations/LearnALSV4/LayerBlending层混合Media/2.png]]
+   ![[Animations/LearnALSV4/LayerBlending层混合Media/2.png]]
 
 # LayerBlending内部结构
 1. Input Cache
@@ -53,7 +53,7 @@ LayerBlending有三个输入：BaseLayer，OverlayLayer，BasePoses。
        ![[Animations/LearnALSV4/LayerBlending层混合Media/11.png]]
     Body Section Layer 做的事情就是把各个身体部位的相关的Montage片段提取出来保存成Cache Pose。此时还是带动全身的还没开始做分层混合，Slot总是加在Overlay Layer Input后面相关身体部位的Montage总是覆盖掉Overlay Layer Input这个输出序列。
     
-    我看了这个骨架的蒙太奇动画的默认slot其实是MovementActionGroup.BaseLayer。如果要在上图对应的slot处插入蒙太奇我们要手动的去改Montage资产的Slot。
+    我看了这个骨架的大部分蒙太奇动画（其实是全部）的默认slot其实是MovementActionGroup.BaseLayer。如果要在上图对应的slot处插入蒙太奇我们要手动的去改Montage资产的Slot。
   
 4. Blend Layer together
     1. Legs+Pelvis+Spine+Head
@@ -76,7 +76,7 @@ LayerBlending有三个输入：BaseLayer，OverlayLayer，BasePoses。
        ![[Animations/LearnALSV4/LayerBlending层混合Media/18.png]]
        
     4. Hands
-       正常手指骨有5个但这里多了个虚拟骨骼[[虚拟骨骼]]
+       正常手指骨有5个但这里多了个虚拟骨骼[[Virtual Bones 虚拟骨骼]]
        ![[Animations/LearnALSV4/LayerBlending层混合Media/19.png]]
        
     5. Blend AnimCurves from both layers together and override previous layer interference.
