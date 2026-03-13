@@ -22,12 +22,12 @@ AIController能获得行为树和AI的角色类已经黑板组件，AIController
 因此，当我们在C++中创建一个自定义任务（例如`UBTTask_MyCustomTask`）时，标准的做法是让它继承自`UBTTaskNode`，并重写其`ExecuteTask`等方法。在蓝图中，对应的基类是`BTTask_BlueprintBase`，它同样构建在`UBTTaskNode`体系之上。这是行为树任务开发的主流和标准路径。
 
 ### UGameplayTask和UBTTask
-部分节点会使用到**GameplayTask**（如BTTask_MoveTo）：`UGameplayTask`是一个更通用、更底层的异步任务框架，它并不专属于AI模块。官方文档指出，其应用场景至少包括**GAS（Gameplay Ability System）和AI**两个主要领域。`UGameplayTask`提供了任务激活、暂停、恢复、资源互斥、基于优先级的打断等核心机制。
+部分节点会使用到**GameplayTask**（如BTTask_MoveTo）：`UGameplayTask`是一个更通用、更底层的异步任务框架，它并不专属于AI模块。官方文档指出，其应用场景至少包括**GAS（Gameplay Ability System）和AI**两个主要领域。`UGameplayTask`提供了任务激活、暂停、恢复、资源互斥、基于优先级的打断等核心机制。在非AI模块和非GAS中同样可以使用GameplayTask，如这篇文章：[[https://www.zhihu.com/search?type=content&q=gameplaytask]]
 
 在AI模块中，`UGameplayTask`框架的具体体现是`UAITask`类。**`UAITask`直接继承自`UGameplayTask`**，并集成了AI相关的上下文（如`AAIController`）。然而，`UAITask`通常用于实现那些需要复杂异步管理、资源竞争或精确打断逻辑的**底层AI操作**，而不是暴露给行为树编辑器的通用任务节点。
 
 理解`UBTTaskNode`和`UAITask`（及背后的`UGameplayTask`）是如何协作的。它们并非替代关系，而是**上层应用与底层支撑**的关系。
-- **执行机制整合**：一个`UBTTaskNode`在其内部执行逻辑中，可以创建并管理一个或多个`UAITask`实例。例如，引擎内置的`BTTask_MoveTo`任务，其内部很可能封装了一个`UAITask_MoveTo`来实际处理寻路移动的异步过程。`UBTTaskNode`的`ExecuteTask`函数负责启动这个`UAITask`，并监听其完成或中断事件，然后据此向行为树返回成功（`Succeeded`）、失败（`Failed`）或运行中（`InProgress`）的状态。
+- **执行机制整合**：一个`UBTTaskNode`在其内部执行逻辑中，可以创建并管理一个或多个`UAITask`实例。例如，引擎内置的**BTTask_MoveTo**任务，其内部封装了一个`UAITask_MoveTo`来实际处理寻路移动的异步过程。`UBTTaskNode`的`ExecuteTask`函数负责启动这个`UAITask`，并监听其完成或中断事件，然后据此向行为树返回成功（`Succeeded`）、失败（`Failed`）或运行中（`InProgress`）的状态。
 - **中断与资源管理**：`UGameplayTask`框架提供的基于优先级的打断和资源互斥机制，为行为树中装饰器（`Decorator`）的“观察者中止”（`ObserverAborts`）功能提供了底层支持。当行为树因条件变化需要中断一个正在`InProgress`的`UBTTaskNode`时，该中断请求会向下传递，最终可能导致其内部驱动的`UAITask`被`Pause`或终止，从而实现平滑的行为切换。
 - **生命周期映射**：`UBTTaskNode`中需要重写的`ReceiveExecute`（开始）、`ReceiveTick`（持续）、`ReceiveAbort`（中断）等事件，与`UGameplayTask`的`Activate`、`TickTask`、`Pause`/`Resume`等生命周期函数形成了对应关系，共同管理着任务从开始到结束的完整过程。
 
@@ -37,8 +37,14 @@ AIController能获得行为树和AI的角色类已经黑板组件，AIController
 
 ### Composites
 合成（Composites） 节点是流控制的一种形式，决定了与其相连的子分支的执行方式。
-1. 选择器（Selector） 从左到右执行分支，通常用于在子树之间进行选择。当选择器找到能够成功执行的子树时，将停止在子树之间移动。举例而言，如果AI正在有效地追逐玩家，选择器将停留在那个分支中，直到它的执行结束，然后转到选择器的父合成节点，继续决策流。
-2. 序列（Sequence） 从左到右执行分支，通常用于按顺序执行一系列子项。与选择器节点不同，序列节点会持续执行其子项，直到它遇到失败的节点。举例而言，如果我们有一个序列节点移动到玩家，则会检查他们是否在射程内，然后旋转并攻击。如果检查玩家是否在射程内便已失败，则不会执行旋转和攻击动作
-3. 简单平行（Simple Parallel） 简单平行节点有两个"连接"。第一个是主任务，它只能分配一个任务节点（意味着没有合成节点）。第二个连接（后台分支）是主任务仍在运行时应该执行的活动，这个并行的分支可以是复合节点或者是另一个简单平行。简单平行节点可能会在主任务完成后立即结束，或者等待后台分支的结束，具体依属性而定。
+1. 选择器（Selector） 从左到右执行分支，通常用于在子树之间进行选择。当选择器找到能够成功执行的子树时，将停止在子树之间移动，并且节点本身返回succeed。举例而言，如果AI正在有效地追逐玩家，选择器将停留在那个分支中，直到它的执行结束，然后转到选择器的父合成节点，继续决策流此时对应返回succeed。
+2. 序列（Sequence） 从左到右执行分支，通常用于按顺序执行一系列子项。与选择器节点不同，序列节点会持续执行其子项，直到它遇到失败的节点。举例而言，如果我们有一个序列节点移动到玩家，则会检查他们是否在射程内，然后旋转并攻击。如果检查玩家是否在射程内便已失败，则不会执行旋转和攻击动作，只要一个任务返回失败，这个Sequence就返回失败。
+3. 简单平行（Simple Parallel） 简单平行节点有两个"连接"。第一个是主任务，它只能分配一个任务节点（意味着没有合成节点）。第二个连接（后台分支）是主任务仍在运行时应该执行的活动，这个并行的分支可以是复合节点或者是另一个简单平行。简单平行节点可能会在主任务完成后立即结束，或者等待后台分支的结束，具体依属性而定，这个节点的返回结果和并行任务没有任何关系，主任务返回succeed后这个节点就返回succeed。
+
+### Service
+当一个分支挂载Service的时候，当行为树在进入一个分支直到分支结束的时候，服务上会负责这个分支时间周期的Tick逻辑。可以用户设定这个Tick的时间周期。可以理解为行为树的眼睛，实时计算外部环境变化并更新AI的记忆——即黑板。
+
+### Decorator
+装饰器通常附加在行为树中的某个节点上。充当条件判断这个节点能否继续执行，或是打断正在执行的任务。
 
 
