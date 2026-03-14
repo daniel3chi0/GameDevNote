@@ -9,6 +9,9 @@ AIController在构造的时候会自动创建PathFollowingComponent和UDEPRECATE
 在Lyra中还会在On Possess的时候监听队伍是否切换，切换后会调用UAIPerceptionComponent::RequestStimuliListenerUpdate来重新感知
 
 AIController能获得行为树和AI的角色类已经黑板组件，AIController的权限是很高的。
+## LineOfSightTo
+AController本身有LineOfSightTo这个方法用来判断另一个Actor是不是在视点范围内，AIController也重写了这个函数。
+可以在服务中用来判断，然后更新黑板值。
 
 # BehaviorTree
 本质是一个持续运行的循环，当跑完所有分支上的任务的时候会开启下一次的循环，节点除了返回“成功”（Success）和“失败”（Failure）外，还有一个关键状态：“**运行**”（Running）。当一个节点（例如一个“移动到某点”或“等待”任务）需要持续多帧才能完成时，它会返回“运行”状态。在此状态下，行为树在下一帧会**直接继续执行该节点**，而不是回溯到父节点或树的更上层。从外部观察，执行流就像“阻塞”在了这个运行中的节点上，其父节点会等待它完成（返回成功或失败）后，才继续管理后续节点。
@@ -42,9 +45,88 @@ AIController能获得行为树和AI的角色类已经黑板组件，AIController
 3. 简单平行（Simple Parallel） 简单平行节点有两个"连接"。第一个是主任务，它只能分配一个任务节点（意味着没有合成节点）。第二个连接（后台分支）是主任务仍在运行时应该执行的活动，这个并行的分支可以是复合节点或者是另一个简单平行。简单平行节点可能会在主任务完成后立即结束，或者等待后台分支的结束，具体依属性而定，这个节点的返回结果和并行任务没有任何关系，主任务返回succeed后这个节点就返回succeed。
 
 ### Service
-当一个分支挂载Service的时候，当行为树在进入一个分支直到分支结束的时候，服务上会负责这个分支时间周期的Tick逻辑。可以用户设定这个Tick的时间周期。可以理解为行为树的眼睛，实时计算外部环境变化并更新AI的记忆——即黑板。
+当一个分支挂载Service的时候，当行为树在进入一个分支直到分支结束的时候，服务上会负责这个分支时间周期的Tick逻辑。可以用户设定这个Tick的时间周期。可以理解为行为树的眼睛，实时计算外部环境变化并更新AI的记忆——即黑板。可以通过定义FBlackboardKeySelector类型的变量获取黑板值。
 
 ### Decorator
 装饰器通常附加在行为树中的某个节点上。充当条件判断这个节点能否继续执行，或是打断正在执行的任务。
+#### Flow Control（观察打断个人理解）
+![[Game AI相关/AI 行为树/1.png|600]]
+当装饰器上级的 **Composites** 节点是 Selector，则 **ObserverAborts** 有4个可选值：
+- None
+- Self
+- LowerPriority
+- Both
+ 当装饰器上级的 **Composites** 节点是 **Sequence**，则 ObserverAborts 有2个可选值：
+- None
+- Self
 
+**None**：默认值选了None的装饰器无作用。
 
+**Self**：（可以立刻停止自身的）若装饰器的计算结果为True，则执行修饰的任务，如果装饰器修饰Composites节点，则允许继续查找下级节点。如果装饰器结果是false，则不执行修饰的任务，如果这个任务修饰正在持续执行的任务，当装饰器计算结果由True改变为False时，当前任务会停止；如果装饰器修饰Composites节点，则不会继续查找下级节点。
+
+**LowerPriority**：（不立刻停止自身，可以立刻停止低优先级的节点旁的数字越小代表的优先级越高）若当前装饰器计算结果为False，则不能执行当前修饰的节点，要执行比这个优先级低的节点。若装饰器计算结果True，会执行当前节点，并且会停止比当前节点低优先级的各种节点。进一步理解，当有一个任务是持续任务正在执行，修饰这个任务的 LowerPriority 装饰器，从True变成False，则不会停止持续任务，因为不是Self，但是如果这个任务结束了，下次再想执行，就不能执行了，因为装饰器是False。
+
+**Both**：（既可以立刻停止自身的，又可以立刻停止低优先级的）单词意思是两者，哪两者？Self和Lower Priority。当这种装饰器为True，则可以执行当前节点，停止低优先级的节点。如果这装饰器为False，则停止当前修饰的节点，执行低优先级的节点。
+
+NotifyObserver：
+- On Result Change：装饰器自身的结果发生变动，就重新评估是否打断
+- On Value Change：装饰器修饰的值变动，重新评估是否打断。
+
+节点被中断后会从这个节点的父节点开始重新进行评估。
+
+使用Blackboard装饰器可以检查黑板上的值加以判断。is set对应true，is not set对应false，如果是对象类型则对应是否为空。
+
+我们能加的装饰器的种类很多，并且可以在一个节点上叠加：自定义黑板装饰器，冷却装饰器，循环装饰器。
+这种情况不对loop第一次后会进入冷却
+![[Game AI相关/AI 行为树/2.png]]
+
+应该改成这种
+![[Game AI相关/AI 行为树/3.png]]
+# BTTask
+继承UBTTask_BlackboardBase的子类task节点可以指定一个任意类型的黑板值作为执行这个行为所需的参数如UBTTask_MoveTo节点支持两种类型的参数FVector和AActor。可以通过定义FBlackboardKeySelector类型的变量获取黑板值。在C++侧我们通常继承UBTTaskNode节点。
+
+# EQS
+环境查询系统使用前需要在插件中开启。
+
+## Generator
+比如我们可以创建一个环形生成器
+![[Game AI相关/AI 行为树/4.png]]
+
+## Test
+在一个generator上我们可以添加tests，test也有多种类型的，如一定距离或是在一个体积的内部或是外部。
+![[Game AI相关/AI 行为树/5.png]]
+添加一个距离测试这是默认与载体的距离。载体就是调用这个EnvironmentQuery文件的对象。
+![[Game AI相关/AI 行为树/9.png]]
+
+如在AI的行为树中调用这个文件，载体就是那个AI，行为树中通过RunEQSQuery来返回EQS数据。query template选上我们创建的environment query文件。下面的黑板key是我们通过这个节点通过EQS计算出的结果最后要填充的黑板值。
+![[Game AI相关/AI 行为树/6.png]]
+
+计算后的黑板值拱其他节点使用
+![[Game AI相关/AI 行为树/8.png]]
+
+RunEQSQuery任务节点的运行模式有下面这些
+![[Game AI相关/AI 行为树/7.png]]
+
+在debug中，绿色的球是通过测试的点，如果我们用single best item就是取分数最高的点。
+![[Game AI相关/AI 行为树/10.png]]
+
+## 环境查询上下文
+默认查询者是这个AI自身，我们可以自定义查询者
+![[Game AI相关/AI 行为树/11.png]]
+选择EnvQueryContext_BlueprintBase作为基类，在蓝图中制作这个context。
+
+使用provide single Actor
+编写一下获取玩家对象的逻辑。EQS在功能层面上已经完善了，但是在显示层面上可能并不完善。这里的querier object和querier actor其实是一个东西都是AI，即调用环境查询的对象（BT）的本身的actor(AI)。
+![[Game AI相关/AI 行为树/12.png]]
+
+指定给EQS中的的generator
+![[Game AI相关/AI 行为树/13.png]]
+
+测试中还有评分和筛选机制
+![[Game AI相关/AI 行为树/14.png]]
+
+# 感知组件
+旧的感知组件Pawn Sensing 应该被AI Perception所取代，但是现在它们两者都还存在于虚幻引擎里，还都能正常工作。
+Lyra中使用AI Perception，但是只有一处被简单的使用了。SensesConfig是注册的感知配置，DominantSense是多个感知同时感知到目标后右边使用哪个感知。蓝图中只调用了RequestStimuliListenerUpdate这个函数。在队伍变换时手动强制AI感知系统更新指定目标刺激监听器的属性。但是Lyra中好像没有什么后续操作了。
+
+![[Game AI相关/AI 行为树/15.png]]

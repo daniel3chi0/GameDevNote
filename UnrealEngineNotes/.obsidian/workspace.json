@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "模块相关/UE插件和模块.md",
+                    "file": "Game AI相关/AI 行为树.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "UE插件和模块"
+                  "title": "AI 行为树"
                 }
               }
             ],
@@ -142,14 +142,12 @@
                 "id": "c7c5e38079d0930e",
                 "type": "leaf",
                 "state": {
-                  "type": "markdown",
+                  "type": "image",
                   "state": {
-                    "file": "Game AI相关/AI 行为树.md",
-                    "mode": "source",
-                    "source": false
+                    "file": "Game AI相关/AI 行为树/7.png"
                   },
-                  "icon": "lucide-file",
-                  "title": "AI 行为树"
+                  "icon": "lucide-image",
+                  "title": "7"
                 }
               }
             ],
@@ -316,23 +314,25 @@
   },
   "active": "ab3691a31fdb5154",
   "lastOpenFiles": [
-    "模块相关/UE插件和模块Media/6.png",
+    "Game AI相关/AI 行为树/15.png",
+    "Game AI相关/AI 行为树/14.png",
+    "Game AI相关/AI 行为树/13.png",
+    "Game AI相关/AI 行为树/12.png",
+    "Game AI相关/AI 行为树/11.png",
+    "Pasted image 20260314194232.png",
+    "Game AI相关/AI 行为树.md",
+    "Game AI相关/AI 行为树/10.png",
+    "Game AI相关/AI 行为树/9.png",
+    "Game AI相关/AI 行为树/8.png",
+    "Game AI相关/AI 行为树/7.png",
+    "Game AI相关/AI 行为树/6.png",
+    "Game AI相关/AI 行为树",
     "模块相关/UE插件和模块.md",
     "模块相关/模块链接包含.md",
-    "Game AI相关/AI 行为树.md",
     "GameFeature.md",
     "Game AI相关",
-    "模块相关/UE插件和模块Media/6.png",
-    "模块相关/UE插件和模块Media/5.png",
-    "模块相关/UE插件和模块Media/4.png",
-    "模块相关/UE插件和模块Media/3.png",
-    "模块相关/UE插件和模块Media/2.png",
-    "模块相关/UE插件和模块Media/1.png",
     "模块相关/UE插件和模块Media",
     "GamePlay相关/UE垃圾回收规则.md",
-    "GamePlay相关/UE垃圾回收规则(Media)/5.png",
-    "GamePlay相关/UE垃圾回收规则(Media)/4.png",
-    "GamePlay相关/UE垃圾回收规则(Media)/3.png",
     "GamePlay相关/UE垃圾回收规则(Media)",
     "GamePlay相关",
     "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
@@ -359,7 +359,6 @@
     "Animations/LearnALSV4/手持道具到OverlayLayer.md",
     "Animations/LearnALSV4/Animation Slot.md",
     "Animations/LearnALSV4/Animation Montage.md",
-    "Animations/LearnALSV4/AnimationLayer动画层.md",
-    "Animations/LearnALSV4/Animation Montage Media"
+    "Animations/LearnALSV4/AnimationLayer动画层.md"
   ]
 }
