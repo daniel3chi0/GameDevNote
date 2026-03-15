@@ -50,7 +50,7 @@ AController本身有LineOfSightTo这个方法用来判断另一个Actor是不是
 ### Decorator
 装饰器通常附加在行为树中的某个节点上。充当条件判断这个节点能否继续执行，或是打断正在执行的任务。
 #### Flow Control（观察打断个人理解）
-![[Game AI相关/AI 行为树/1.png|600]]
+![[Game AI相关/AI 行为树 Media/1.png|600]]
 当装饰器上级的 **Composites** 节点是 Selector，则 **ObserverAborts** 有4个可选值：
 - None
 - Self
@@ -78,10 +78,10 @@ NotifyObserver：
 
 我们能加的装饰器的种类很多，并且可以在一个节点上叠加：自定义黑板装饰器，冷却装饰器，循环装饰器。
 这种情况不对loop第一次后会进入冷却
-![[Game AI相关/AI 行为树/2.png]]
+![[Game AI相关/AI 行为树 Media/2.png]]
 
 应该改成这种
-![[Game AI相关/AI 行为树/3.png]]
+![[Game AI相关/AI 行为树 Media/3.png]]
 # BTTask
 继承UBTTask_BlackboardBase的子类task节点可以指定一个任意类型的黑板值作为执行这个行为所需的参数如UBTTask_MoveTo节点支持两种类型的参数FVector和AActor。可以通过定义FBlackboardKeySelector类型的变量获取黑板值。在C++侧我们通常继承UBTTaskNode节点。
 
@@ -90,43 +90,43 @@ NotifyObserver：
 
 ## Generator
 比如我们可以创建一个环形生成器
-![[Game AI相关/AI 行为树/4.png]]
+![[Game AI相关/AI 行为树 Media/4.png]]
 
 ## Test
 在一个generator上我们可以添加tests，test也有多种类型的，如一定距离或是在一个体积的内部或是外部。
-![[Game AI相关/AI 行为树/5.png]]
+![[Game AI相关/AI 行为树 Media/5.png]]
 添加一个距离测试这是默认与载体的距离。载体就是调用这个EnvironmentQuery文件的对象。
-![[Game AI相关/AI 行为树/9.png]]
+![[Game AI相关/AI 行为树 Media/9.png]]
 
 如在AI的行为树中调用这个文件，载体就是那个AI，行为树中通过RunEQSQuery来返回EQS数据。query template选上我们创建的environment query文件。下面的黑板key是我们通过这个节点通过EQS计算出的结果最后要填充的黑板值。
-![[Game AI相关/AI 行为树/6.png]]
+![[Game AI相关/AI 行为树 Media/6.png]]
 
 计算后的黑板值拱其他节点使用
-![[Game AI相关/AI 行为树/8.png]]
+![[Game AI相关/AI 行为树 Media/8.png]]
 
 RunEQSQuery任务节点的运行模式有下面这些
-![[Game AI相关/AI 行为树/7.png]]
+![[Game AI相关/AI 行为树 Media/7.png]]
 
 在debug中，绿色的球是通过测试的点，如果我们用single best item就是取分数最高的点。
-![[Game AI相关/AI 行为树/10.png]]
+![[Game AI相关/AI 行为树 Media/10.png]]
 
 ## 环境查询上下文
 默认查询者是这个AI自身，我们可以自定义查询者
-![[Game AI相关/AI 行为树/11.png]]
+![[Game AI相关/AI 行为树 Media/11.png]]
 选择EnvQueryContext_BlueprintBase作为基类，在蓝图中制作这个context。
 
 使用provide single Actor
 编写一下获取玩家对象的逻辑。EQS在功能层面上已经完善了，但是在显示层面上可能并不完善。这里的querier object和querier actor其实是一个东西都是AI，即调用环境查询的对象（BT）的本身的actor(AI)。
-![[Game AI相关/AI 行为树/12.png]]
+![[Game AI相关/AI 行为树 Media/12.png]]
 
 指定给EQS中的的generator
-![[Game AI相关/AI 行为树/13.png]]
+![[Game AI相关/AI 行为树 Media/13.png]]
 
 测试中还有评分和筛选机制
-![[Game AI相关/AI 行为树/14.png]]
+![[Game AI相关/AI 行为树 Media/14.png]]
 
 # 感知组件
 旧的感知组件Pawn Sensing 应该被AI Perception所取代，但是现在它们两者都还存在于虚幻引擎里，还都能正常工作。
 Lyra中使用AI Perception，但是只有一处被简单的使用了。SensesConfig是注册的感知配置，DominantSense是多个感知同时感知到目标后右边使用哪个感知。蓝图中只调用了RequestStimuliListenerUpdate这个函数。在队伍变换时手动强制AI感知系统更新指定目标刺激监听器的属性。但是Lyra中好像没有什么后续操作了。
 
-![[Game AI相关/AI 行为树/15.png]]
+![[Game AI相关/AI 行为树 Media/15.png]]
