@@ -1,0 +1,26 @@
+我们对属性的clamp夹值通常会放在
+PreAttributeChange和PostGameplayEffectExecute两个函数中进行
+PreAttributeChange可以被CurrentValue和BaseValue的改变触发，
+通常PreAttributeChange中的夹值操作是针对CurrentValue的如下
+![[UnrealEngineNotes/GAS相关/Attribute值变动触发流程/1.png]]
+
+当然也有办法对BaseValue进行夹值如下
+![[UnrealEngineNotes/GAS相关/Attribute值变动触发流程/2.png]]
+
+需要注意的是我们用属性的Get函数拿到的其实是属性CurrentValue
+而PostGameplayEffectExecute函数只可以在属性的BaseValue改变时触发，这是GD文档中写的
+而字面意思则是GE执行后触发。我看了代码也并没有限制是CurrentValue还是BaseValue。
+
+BaseValue的改变会引起CurrentValue的改变
+showdebug abilitysystem 上显示的属性值是CurrentValue
+
+属性的Set操作会导致触发PreAttributeChange
+所以可以在PostGameplayEffectExecute对属性进行Set操作然后再响应PreAttributeChange，PostGameplayEffectExecute中夹值不会对客户端进行二次同步。
+
+我们虽然在PreAttributeChange可以对BaseValue进行夹值
+但同样可以在PostGameplayEffectExecute中对BaseValue进行夹值
+![[UnrealEngineNotes/GAS相关/Attribute值变动触发流程/3.png]]
+
+但需要注意的是如果在PostGameplayEffectExecute对BaseValue进行夹值后
+会导致PreAttributeChange多执行一次，可能会对强迫症或是性能优化不友好。
+![[UnrealEngineNotes/GAS相关/Attribute值变动触发流程/4.png]]
