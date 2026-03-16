@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "Animations/LearnALSV4/手持道具到OverlayLayer.md",
+                    "file": "GAS相关/在GA中获取WorldContextObject.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "手持道具到OverlayLayer"
+                  "title": "在GA中获取WorldContextObject"
                 }
               }
             ],
@@ -312,8 +312,16 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "75b58e5e42e3eb8d",
+  "active": "ab3691a31fdb5154",
   "lastOpenFiles": [
+    "GAS相关/在GA中获取WorldContextObject （Media）/3.png",
+    "GAS相关/在GA中获取WorldContextObject （Media）/2.png",
+    "GAS相关/在GA中获取WorldContextObject （Media）",
+    "GAS相关/在GA中获取WorldContextObject （Media）/1.png",
+    "ModularGamePlay/GameFrameworkComponentManager.md",
+    "GAS相关/在GA中获取WorldContextObject.md",
+    "GAS相关",
+    "Animations/LearnALSV4/手持道具到OverlayLayer.md",
     "Game AI相关/状态树 StateTree.md",
     "Game AI相关/状态树 StateTree Media/80.png",
     "Game AI相关/状态树 StateTree Media/79.png",
@@ -323,10 +331,7 @@
     "Game AI相关/状态树 StateTree Media/75.png",
     "Game AI相关/状态树 StateTree Media/74.png",
     "Game AI相关/状态树 StateTree Media/73.png",
-    "Game AI相关/状态树 StateTree Media/72.png",
-    "Game AI相关/状态树 StateTree Media/71.png",
     "Game AI相关/AI 行为树.md",
-    "ModularGamePlay/GameFrameworkComponentManager.md",
     "GameFeature.md",
     "Game AI相关/状态树 StateTree Media",
     "Game AI相关/AI 行为树 Media",
@@ -343,8 +348,6 @@
     "Untitled.md",
     "Excalidraw/Drawing 2025-09-08 23.45.47.excalidraw.md",
     "Plugin&Editor/UE4自定义可旋转Joystick.md",
-    "Plugin&Editor/UE4自定义可旋转Joystick (Media)",
-    "Plugin&Editor",
     "Animations/LearnALSV4/IK和FK.md",
     "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
     "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
@@ -356,8 +359,6 @@
     "Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
     "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
     "Animations/LearnALSV4/同步组设置.md",
-    "Animations/LearnALSV4/手持道具到OverlayLayer.md",
-    "Animations/LearnALSV4/Animation Slot.md",
-    "Animations/LearnALSV4/Animation Montage.md"
+    "Animations/LearnALSV4/Animation Slot.md"
   ]
 }

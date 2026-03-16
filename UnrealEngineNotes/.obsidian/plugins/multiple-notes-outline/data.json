@@ -90,10 +90,11 @@
   "showPropertyLinks": true,
   "recent": {
     "file": [
+      "GAS相关/在GA中获取WorldContextObject.md",
+      "ModularGamePlay/GameFrameworkComponentManager.md",
       "Animations/LearnALSV4/手持道具到OverlayLayer.md",
       "Game AI相关/状态树 StateTree.md",
       "Game AI相关/AI 行为树.md",
-      "ModularGamePlay/GameFrameworkComponentManager.md",
       "Game AI相关/状态树 StateTree Media/49.png",
       "GameFeature.md",
       "Game AI相关/AI 行为树 Media/11.png",
@@ -118,8 +119,7 @@
       "Animations/LearnALSV4/VIrtual Bones Media/1.png",
       "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
       "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md",
-      "Animations/LearnALSV4/重定向动画.md",
-      "Animations/LearnALSV4/LayerBlending.md"
+      "Animations/LearnALSV4/重定向动画.md"
     ],
     "folder": []
   },
