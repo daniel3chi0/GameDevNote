@@ -246,7 +246,7 @@ enter condition 也可以通过蓝图自定义
 
 另外两个重载函数是
 退出和完成，之前已经介绍过了complete是当前状态中只要一个task成功或者失败就调用每一个task的complete（并且能知道到底是哪个task的成功或失败触发的），exit则是在transiton之前会去调用每个激活状态task的exitstate函数。
-![[52.png]]
+![[UnrealEngineNotes/Game AI相关/状态树 StateTree Media/52.png]]
 同样exitState函数中也会告诉我们一些Task的信息
 类似下面这个结构体，比如我们这个transiton的目标是什么，或者是next active state。
 ![[Game AI相关/状态树 StateTree Media/53.png]]
