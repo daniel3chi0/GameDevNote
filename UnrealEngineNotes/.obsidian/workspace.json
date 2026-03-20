@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "GAS相关/在GA中获取WorldContextObject.md",
+                    "file": "GamePlay相关/关卡旅行.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "在GA中获取WorldContextObject"
+                  "title": "关卡旅行"
                 }
               }
             ],
@@ -211,7 +211,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 287.5
+    "width": 200
   },
   "right": {
     "id": "f90a995309f0c52a",
@@ -298,7 +298,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 360.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -312,53 +313,53 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "ab3691a31fdb5154",
+  "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
-    "GAS相关/在GA中获取WorldContextObject （Media）/3.png",
-    "GAS相关/在GA中获取WorldContextObject （Media）/2.png",
-    "GAS相关/在GA中获取WorldContextObject （Media）",
-    "GAS相关/在GA中获取WorldContextObject （Media）/1.png",
-    "ModularGamePlay/GameFrameworkComponentManager.md",
+    "开源项目分析/GD中的GAS设计/9.png",
+    "开源项目分析/GD中的GAS设计/8.png",
+    "开源项目分析/GD中的GAS设计/7.png",
+    "开源项目分析/GD中的GAS设计/6.png",
+    "开源项目分析/GD中的GAS设计/56.png",
+    "开源项目分析/GD中的GAS设计/55.png",
+    "开源项目分析/GD中的GAS设计/54.png",
+    "开源项目分析/GD中的GAS设计/53.png",
+    "开源项目分析/GD中的GAS设计/52.png",
+    "开源项目分析/GD中的GAS设计/51.png",
+    "开源项目分析/GD中的GAS设计/50.png",
+    "开源项目分析/GD中的GAS设计",
+    "开源项目分析/GD中的GAS设计.md",
+    "开源项目分析",
+    "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",
+    "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
+    "GAS相关/GA预测key",
+    "GAS相关/GA预测key.md",
+    "GAS相关/Attribute值变动触发流程",
+    "GAS相关/Attribute值变动触发流程.md",
+    "C++特性/左值与右值和万能引用，引用折叠.md",
+    "C++特性/完美转发.md",
+    "C++特性/move vs forward.md",
+    "C++特性",
+    "GamePlay相关/关卡旅行Media",
+    "GamePlay相关/关卡旅行.md",
     "GAS相关/在GA中获取WorldContextObject.md",
+    "GAS相关/在GA中获取WorldContextObject （Media）",
+    "ModularGamePlay/GameFrameworkComponentManager.md",
     "GAS相关",
     "Animations/LearnALSV4/手持道具到OverlayLayer.md",
     "Game AI相关/状态树 StateTree.md",
-    "Game AI相关/状态树 StateTree Media/80.png",
-    "Game AI相关/状态树 StateTree Media/79.png",
-    "Game AI相关/状态树 StateTree Media/78.png",
-    "Game AI相关/状态树 StateTree Media/77.png",
-    "Game AI相关/状态树 StateTree Media/76.png",
-    "Game AI相关/状态树 StateTree Media/75.png",
-    "Game AI相关/状态树 StateTree Media/74.png",
-    "Game AI相关/状态树 StateTree Media/73.png",
     "Game AI相关/AI 行为树.md",
     "GameFeature.md",
     "Game AI相关/状态树 StateTree Media",
-    "Game AI相关/AI 行为树 Media",
     "模块相关/UE插件和模块.md",
     "模块相关/模块链接包含.md",
-    "Game AI相关",
-    "模块相关/UE插件和模块Media",
     "GamePlay相关/UE垃圾回收规则.md",
-    "GamePlay相关/UE垃圾回收规则(Media)",
-    "GamePlay相关",
     "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
-    "模块相关/模块链接包含Media",
-    "模块相关",
     "Untitled.md",
     "Excalidraw/Drawing 2025-09-08 23.45.47.excalidraw.md",
     "Plugin&Editor/UE4自定义可旋转Joystick.md",
     "Animations/LearnALSV4/IK和FK.md",
     "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
     "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
-    "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md",
-    "Animations/LearnALSV4/重定向动画.md",
-    "Animations/LearnALSV4/LayerBlending.md",
-    "虚拟骨骼.md",
-    "Animations/LearnALSV4/叠加动画.md",
-    "Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
-    "Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
-    "Animations/LearnALSV4/同步组设置.md",
-    "Animations/LearnALSV4/Animation Slot.md"
+    "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md"
   ]
 }
