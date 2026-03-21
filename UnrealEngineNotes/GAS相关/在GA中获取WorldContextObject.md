@@ -18,14 +18,14 @@
 
 我们可以查看一下Spec.GetPrimaryInstance()中的逻辑
 在Ability->GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::InstancedPerActor时返回NonReplicatedInstances 或 ReplicatedInstances中的元素
-![[UnrealEngineNotes/GAS相关/在GA中获取WorldContextObject （Media）/4.png]]
+![[GAS相关/在GA中获取WorldContextObject （Media）/4.png]]
 
 NonReplicatedInstances 或 ReplicatedInstances中的元素在什么时候会被填充
 查看源码知道会在CreateNewInstanceOfAbility中被填充
 CreateNewInstanceOfAbility，就是创建GA实例的方法。
 如果是EGameplayAbilityInstancingPolicy::InstancedPerActor的GA会在GiveAbility的时候就实例化，InstancedPerExecution的话会在激活这个能力的时候实例化。
 而只有实例化的GA 的 CurrentActorInfo才不会为空
-![[UnrealEngineNotes/GAS相关/在GA中获取WorldContextObject （Media）/5.png]]
+![[GAS相关/在GA中获取WorldContextObject （Media）/5.png]]
 
 如果我们在CDO中跑逻辑（GASpec.Ability）
 GetAvatarActorFromActorInfo()就有可能为空

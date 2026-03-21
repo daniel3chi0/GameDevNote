@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "GamePlay相关/关卡旅行.md",
+                    "file": "Plugin&Editor/UE4自定义可旋转Joystick.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "关卡旅行"
+                  "title": "UE4自定义可旋转Joystick"
                 }
               }
             ],
@@ -151,7 +151,7 @@
                 }
               }
             ],
-            "currentTab": 6
+            "currentTab": 3
           }
         ],
         "direction": "horizontal"
@@ -315,6 +315,30 @@
   },
   "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
+    "ModularGamePlay/GameFrameworkComponentManager.md",
+    "GameFeature.md",
+    "模块相关/模块链接包含.md",
+    "模块相关/UE插件和模块.md",
+    "C++特性/move vs forward.md",
+    "Game AI相关/状态树 StateTree.md",
+    "Game AI相关/AI 行为树.md",
+    "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
+    "GAS相关/GA预测key.md",
+    "GamePlay相关/UE垃圾回收规则.md",
+    "开源项目分析/GD中的GAS设计.md",
+    "GamePlay相关/关卡旅行.md",
+    "Plugin&Editor/UE4自定义可旋转Joystick.md",
+    "GAS相关/Attribute值变动触发流程.md",
+    "GAS相关/在GA中获取WorldContextObject.md",
+    "C++特性/左值与右值和万能引用，引用折叠.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/1.md",
+    "开源项目分析/GD中的GAS设计/1.png",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/1.png.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计",
+    "UnrealEngineNotes/开源项目分析",
+    "UnrealEngineNotes",
+    "C++特性/完美转发.md",
+    "Plugin&Editor/UE4自定义可旋转Joystick (Media)/2.png",
     "开源项目分析/GD中的GAS设计/9.png",
     "开源项目分析/GD中的GAS设计/8.png",
     "开源项目分析/GD中的GAS设计/7.png",
@@ -323,43 +347,19 @@
     "开源项目分析/GD中的GAS设计/55.png",
     "开源项目分析/GD中的GAS设计/54.png",
     "开源项目分析/GD中的GAS设计/53.png",
-    "开源项目分析/GD中的GAS设计/52.png",
-    "开源项目分析/GD中的GAS设计/51.png",
-    "开源项目分析/GD中的GAS设计/50.png",
     "开源项目分析/GD中的GAS设计",
-    "开源项目分析/GD中的GAS设计.md",
     "开源项目分析",
     "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",
-    "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
     "GAS相关/GA预测key",
-    "GAS相关/GA预测key.md",
     "GAS相关/Attribute值变动触发流程",
-    "GAS相关/Attribute值变动触发流程.md",
-    "C++特性/左值与右值和万能引用，引用折叠.md",
-    "C++特性/完美转发.md",
-    "C++特性/move vs forward.md",
     "C++特性",
     "GamePlay相关/关卡旅行Media",
-    "GamePlay相关/关卡旅行.md",
-    "GAS相关/在GA中获取WorldContextObject.md",
-    "GAS相关/在GA中获取WorldContextObject （Media）",
-    "ModularGamePlay/GameFrameworkComponentManager.md",
-    "GAS相关",
     "Animations/LearnALSV4/手持道具到OverlayLayer.md",
-    "Game AI相关/状态树 StateTree.md",
-    "Game AI相关/AI 行为树.md",
-    "GameFeature.md",
-    "Game AI相关/状态树 StateTree Media",
-    "模块相关/UE插件和模块.md",
-    "模块相关/模块链接包含.md",
-    "GamePlay相关/UE垃圾回收规则.md",
     "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
     "Untitled.md",
     "Excalidraw/Drawing 2025-09-08 23.45.47.excalidraw.md",
-    "Plugin&Editor/UE4自定义可旋转Joystick.md",
     "Animations/LearnALSV4/IK和FK.md",
     "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
-    "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
-    "Animations/LearnALSV4/LayeredBlendPerBone分层混合.md"
+    "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md"
   ]
 }
