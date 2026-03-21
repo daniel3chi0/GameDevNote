@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "Plugin&Editor/UE4自定义可旋转Joystick.md",
+                    "file": "GamePlay相关/关卡旅行.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "UE4自定义可旋转Joystick"
+                  "title": "关卡旅行"
                 }
               }
             ],
@@ -211,7 +211,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 345.5
   },
   "right": {
     "id": "f90a995309f0c52a",
@@ -298,8 +298,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -315,6 +314,7 @@
   },
   "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
+    "Plugin&Editor/UE4自定义可旋转Joystick.md",
     "ModularGamePlay/GameFrameworkComponentManager.md",
     "GameFeature.md",
     "模块相关/模块链接包含.md",
@@ -327,7 +327,6 @@
     "GamePlay相关/UE垃圾回收规则.md",
     "开源项目分析/GD中的GAS设计.md",
     "GamePlay相关/关卡旅行.md",
-    "Plugin&Editor/UE4自定义可旋转Joystick.md",
     "GAS相关/Attribute值变动触发流程.md",
     "GAS相关/在GA中获取WorldContextObject.md",
     "C++特性/左值与右值和万能引用，引用折叠.md",

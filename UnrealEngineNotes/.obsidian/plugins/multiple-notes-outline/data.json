@@ -90,6 +90,7 @@
   "showPropertyLinks": true,
   "recent": {
     "file": [
+      "GamePlay相关/关卡旅行.md",
       "Plugin&Editor/UE4自定义可旋转Joystick.md",
       "ModularGamePlay/GameFrameworkComponentManager.md",
       "GameFeature.md",
@@ -102,7 +103,6 @@
       "GAS相关/GA预测key.md",
       "GamePlay相关/UE垃圾回收规则.md",
       "开源项目分析/GD中的GAS设计.md",
-      "GamePlay相关/关卡旅行.md",
       "GAS相关/Attribute值变动触发流程.md",
       "GAS相关/在GA中获取WorldContextObject.md",
       "C++特性/左值与右值和万能引用，引用折叠.md",
