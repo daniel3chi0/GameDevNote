@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "1e72a4ce106bf878",
+    "type": "split",
+    "children": [
+      {
+        "id": "cd98f2d4c76dad7e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "89527c35fb1e5228",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Lyra背包系统"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f022838b645bba68",
+    "type": "split",
+    "children": [
+      {
+        "id": "cafdd333cd8a61da",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b719c1881c739969",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "e6c7493f4ef491e1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "032f560fdd705a58",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 299.5
+  },
+  "right": {
+    "id": "d9ee3a52352ee45c",
+    "type": "split",
+    "children": [
+      {
+        "id": "13024b8cb8ce8aef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cc4c42ef273470a8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "UnrealEngineNotes/Game AI相关/AI 行为树.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for AI 行为树"
+            }
+          },
+          {
+            "id": "32765893e74c354b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "UnrealEngineNotes/Game AI相关/AI 行为树.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from AI 行为树"
+            }
+          },
+          {
+            "id": "5b2ab31468b18044",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "97f3f64afaa96b04",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f520d40cd5a3487a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Lyra背包系统 的大纲"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 205.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "89527c35fb1e5228",
+  "lastOpenFiles": [
+    "UnrealEngineNotes/Animations/LearnALSV4/同步组设置.md",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/3.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/1.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/2.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统",
+    "UnrealEngineNotes/开源项目分析/Lyra",
+    "UnrealEngineNotes/Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/重定向动画.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/Aim Offset瞄准偏移.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/手持道具到OverlayLayer.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/手持道具Media/52.avif",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/3.png",
+    "UnrealEngineNotes/Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/动画层接口.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/叠加动画.md",
+    "UnrealEngineNotes/C++特性/左值与右值和万能引用，引用折叠.md",
+    "UnrealEngineNotes/C++特性/完美转发.md",
+    "UnrealEngineNotes/C++特性/move vs forward.md",
+    "UnrealEngineNotes/GamePlay相关/关卡旅行.md",
+    "UnrealEngineNotes/GamePlay相关/UE垃圾回收规则.md",
+    "UnrealEngineNotes/ModularGamePlay/GameFrameworkComponentManager.md",
+    "UnrealEngineNotes/C++特性",
+    "UnrealEngineNotes/GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
+    "UnrealEngineNotes/GAS相关/GA预测key.md",
+    "UnrealEngineNotes/GAS相关/Attribute值变动触发流程.md",
+    "UnrealEngineNotes/GAS相关/在GA中获取WorldContextObject.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/56.png",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/55.png",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/54.png",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/53.png",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/52.png",
+    "UnrealEngineNotes/OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计",
+    "UnrealEngineNotes/Animations/LearnALSV4/LayerBlending.md",
+    "UnrealEngineNotes/Animations/LearnALSV4/IK和FK.md",
+    "UnrealEngineNotes/Game AI相关/AI 行为树.md",
+    "UnrealEngineNotes/Plugin&Editor/UE4自定义可旋转Joystick.md",
+    "UnrealEngineNotes/开源项目分析",
+    "开源项目分析",
+    "开源项目分析",
+    "UnrealEngineNotes/GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",
+    "UnrealEngineNotes/GAS相关/GA预测key",
+    "UnrealEngineNotes/GAS相关/Attribute值变动触发流程"
+  ]
+}
