@@ -10,7 +10,7 @@
           {
             "id": "f2a16773e4a76405",
             "type": "tabs",
-            "dimension": 55.294117647058826,
+            "dimension": 70.7843137254902,
             "children": [
               {
                 "id": "89f39f6258bcc743",
@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "GamePlay相关/关卡旅行.md",
+                    "file": "开源项目分析/Lyra/Lyra背包系统.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "关卡旅行"
+                  "title": "Lyra背包系统"
                 }
               }
             ],
@@ -58,7 +58,7 @@
           {
             "id": "1fd9fbf8ee56e33a",
             "type": "tabs",
-            "dimension": 44.70588235294118,
+            "dimension": 29.215686274509807,
             "children": [
               {
                 "id": "6d2b96add3d1dff6",
@@ -298,7 +298,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 384.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -314,51 +314,50 @@
   },
   "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
-    "Plugin&Editor/UE4自定义可旋转Joystick.md",
-    "ModularGamePlay/GameFrameworkComponentManager.md",
-    "GameFeature.md",
     "模块相关/模块链接包含.md",
-    "模块相关/UE插件和模块.md",
-    "C++特性/move vs forward.md",
-    "Game AI相关/状态树 StateTree.md",
-    "Game AI相关/AI 行为树.md",
+    "开源项目分析/Lyra/Lyra背包系统.md",
+    "开源项目分析/Lyra/Lyra背包系统/3.png",
+    "开源项目分析/Lyra/Lyra背包系统/2.png",
+    "开源项目分析/Lyra/Lyra背包系统",
+    "开源项目分析/Lyra/Lyra背包系统/1.png",
+    "Test/OB2NotionT2.md",
+    "Test/OB2NotionT1.md",
+    "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
+    "GamePlay相关/关卡旅行.md",
+    "开源项目分析/Lyra",
+    "Plugin&Editor/UE4自定义可旋转Joystick.md",
+    "开源项目分析/Untitled.md",
+    "ModularGamePlay/GameFrameworkComponentManager.md",
     "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
     "GAS相关/GA预测key.md",
-    "GamePlay相关/UE垃圾回收规则.md",
-    "开源项目分析/GD中的GAS设计.md",
-    "GamePlay相关/关卡旅行.md",
     "GAS相关/Attribute值变动触发流程.md",
     "GAS相关/在GA中获取WorldContextObject.md",
+    "GamePlay相关/UE垃圾回收规则.md",
+    "Excalidraw/Drawing 2025-09-08 23.45.47.excalidraw.md",
+    "开源项目分析/GD中的GAS设计.md",
+    "C++特性/move vs forward.md",
     "C++特性/左值与右值和万能引用，引用折叠.md",
+    "C++特性/完美转发.md",
+    "模块相关/UE插件和模块.md",
+    "GameFeature.md",
+    "Game AI相关/状态树 StateTree.md",
+    "Game AI相关/AI 行为树.md",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计/1.md",
     "开源项目分析/GD中的GAS设计/1.png",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计/1.png.md",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计",
     "UnrealEngineNotes/开源项目分析",
     "UnrealEngineNotes",
-    "C++特性/完美转发.md",
     "Plugin&Editor/UE4自定义可旋转Joystick (Media)/2.png",
     "开源项目分析/GD中的GAS设计/9.png",
     "开源项目分析/GD中的GAS设计/8.png",
     "开源项目分析/GD中的GAS设计/7.png",
     "开源项目分析/GD中的GAS设计/6.png",
     "开源项目分析/GD中的GAS设计/56.png",
-    "开源项目分析/GD中的GAS设计/55.png",
-    "开源项目分析/GD中的GAS设计/54.png",
-    "开源项目分析/GD中的GAS设计/53.png",
     "开源项目分析/GD中的GAS设计",
     "开源项目分析",
     "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",
     "GAS相关/GA预测key",
-    "GAS相关/Attribute值变动触发流程",
-    "C++特性",
-    "GamePlay相关/关卡旅行Media",
-    "Animations/LearnALSV4/手持道具到OverlayLayer.md",
-    "OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
-    "Untitled.md",
-    "Excalidraw/Drawing 2025-09-08 23.45.47.excalidraw.md",
-    "Animations/LearnALSV4/IK和FK.md",
-    "Animations/LearnALSV4/Outline 从Character解析ALSV4结构.md",
-    "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md"
+    "GAS相关/Attribute值变动触发流程"
   ]
 }
