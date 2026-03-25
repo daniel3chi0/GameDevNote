@@ -16,8 +16,15 @@ Fragment是片段的意思，是UObject的子类，被Definition所持有。
 # Definition
 Definition是定义的意思，是UObject的子类，被Instance所持有，作为Instance中的数据填充。
 # Instance
-Instance是实例，是UObject的子类，Instance通常是Entry中的一部分，并且Entry被EntryList所包裹且两者组合成FastArray的结构，然后EntryList被ManagerComponent所持有，Instance代表元素条目中的实体。
+Instance是实例，是UObject的子类，Instance通常是**Entry**中的一部分，并且**Entry**被EntryList所包裹且两者组合成FastArray的结构，然后EntryList被ManagerComponent所持有，Instance代表元素条目中的实体。
 # ManagerComponent
-作为管理器管理EntryList这个列表，在Inventory模块中作为ActorComponent的子类。在Equipment模块中则是ModularGameplay的PawnComponent的子类。
+作为管理器管理EntryList这个列表：
+- 在Inventory部分中作为ActorComponent的子类。
+- 在Equipment部分中作为ModularGameplay的PawnComponent的子类。
+- 在Weapons部分中作为ModularGameplay的ControllerComponent的子类（Controller组件顾名思义就是要挂在controller上的）。Weapons部分比较特殊，内部没FastArray结构的EntryList，取而代之的是两个结构体数组：屏幕空间的打击点数组，服务器侧打击点标记合批数组。
 
+# 一次实例生成过程
+在Inventory部分有个接口Pickupable，里面有个纯虚函数GetPickupInventory。
+![[开源项目分析/Lyra/Lyra背包系统/4.png]]
 
+这个接口被ALyraWorldCollectable这个Actor所继承
