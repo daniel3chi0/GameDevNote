@@ -44,12 +44,12 @@
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "开源项目分析/Lyra/Lyra背包系统.md",
+                    "file": "开源项目分析/GD中的GAS设计.md",
                     "mode": "source",
                     "source": false
                   },
                   "icon": "lucide-file",
-                  "title": "Lyra背包系统"
+                  "title": "GD中的GAS设计"
                 }
               }
             ],
@@ -314,9 +314,13 @@
   },
   "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
+    "开源项目分析/Lyra/Lyra背包系统.md",
+    "开源项目分析/Lyra/Lyra背包系统/8.png",
+    "开源项目分析/Lyra/Lyra背包系统/7.png",
+    "开源项目分析/Lyra/Lyra背包系统/6.png",
+    "开源项目分析/Lyra/Lyra背包系统/5.png",
     "开源项目分析/Lyra/Lyra背包系统/4.png",
     "模块相关/模块链接包含.md",
-    "开源项目分析/Lyra/Lyra背包系统.md",
     "开源项目分析/Lyra/Lyra背包系统/3.png",
     "开源项目分析/Lyra/Lyra背包系统/2.png",
     "开源项目分析/Lyra/Lyra背包系统",
@@ -350,11 +354,6 @@
     "UnrealEngineNotes/开源项目分析",
     "UnrealEngineNotes",
     "Plugin&Editor/UE4自定义可旋转Joystick (Media)/2.png",
-    "开源项目分析/GD中的GAS设计/9.png",
-    "开源项目分析/GD中的GAS设计/8.png",
-    "开源项目分析/GD中的GAS设计/7.png",
-    "开源项目分析/GD中的GAS设计/6.png",
-    "开源项目分析/GD中的GAS设计/56.png",
     "开源项目分析/GD中的GAS设计",
     "开源项目分析",
     "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",

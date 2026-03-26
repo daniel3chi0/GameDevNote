@@ -198,7 +198,7 @@ void UInventoryFragment_SetStats::OnInstanceCreated(ULyraInventoryItemInstance* 
 ```
 # InventoryItem实例在什么时候使用？
 根据前面的分析我们知道ItemInstance是Entry中的一部分。ItemInstance中持有Definition和Fragment信息。而Entry中主要包括Instance和StackCount。
-- FLyraInventoryList::GetAllItems()  获取背包中所有ItemInstance供外部使用。被ULyraInventoryManagerComponent调用，这个函数在蓝图中被使用。
+- **FLyraInventoryList::GetAllItems()**  获取背包中所有ItemInstance供外部使用。被ULyraInventoryManagerComponent调用，这个函数在蓝图中被使用。
   ```cpp
 	TArray<ULyraInventoryItemInstance*> ULyraInventoryManagerComponent::GetAllItems() const  
 	{  
@@ -207,18 +207,19 @@ void UInventoryFragment_SetStats::OnInstanceCreated(ULyraInventoryItemInstance* 
   ```
 
 	1. ULyraInventoryItemInstance是UObject的子类可以Add到TileViewWidget中
-	   ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/5.png]]
+	   ![[开源项目分析/Lyra/Lyra背包系统/5.png]]
 	
 	2. 在行为树的服务中判断弹药数量
-	   ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/6.png]]
+	   ![[开源项目分析/Lyra/Lyra背包系统/6.png]]
 	   
-- ULyraInventoryManagerComponent::FindFirstItemStackByDefinition()  返回背包中第一个定义匹配到的ItemInstance。
+- **ULyraInventoryManagerComponent::FindFirstItemStackByDefinition()**  返回背包中第一个定义匹配到的ItemInstance。
   同样在蓝图中被使用。
   在武器生成器中如下
-  ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/7.png]]
+  ![[开源项目分析/Lyra/Lyra背包系统/7.png]]
   在EQS查询上下文中如下
-  ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/8.png]]
-- ULyraInventoryManagerComponent::GetTotalItemCountByDefinition() 返回定义匹配上的ItemInstance的数量。
+  ![[开源项目分析/Lyra/Lyra背包系统/8.png]]
+  
+- **ULyraInventoryManagerComponent::GetTotalItemCountByDefinition()** 返回定义匹配上的ItemInstance的数量。
   可选择在ULyraAbilityCost_InventoryItem::CheckCost使用，目前是屏蔽掉了这部分代码。
 
 # Equipment一次实例生成过程
