@@ -142,3 +142,38 @@ void ULyraInventoryManagerComponent::AddItemInstance(ULyraInventoryItemInstance*
     }
 }
 ```
+
+上述无论是AddItemDefinition还是AddItemInstance中都有InventoryList.AddEntry()的操作。传定义的参数的AddEntry内部会New一个ItemInstance出来然后作为返回值。ItemInstance为参数的是个空实现如下：
+```cpp
+void FLyraInventoryList::AddEntry(ULyraInventoryItemInstance* Instance)  
+{  
+    unimplemented();  
+}
+```
+这也正常FInventoryPickup中存了定义和实例，在一个循环体内生成两个同样的ItemInstance就太冗余了。
+Lyra中代码的思想应该就是有FInventoryPickup中有定义就不要有对应默认实例了，二者取一就行了。
+
+### 在生成的实例中填充Definition和Fragment
+```cpp
+ULyraInventoryItemInstance* FLyraInventoryList::AddEntry(TSubclassOf<ULyraInventoryItemDefinition> ItemDef, int32 StackCount)  
+{  
+    ...
+    
+    FLyraInventoryEntry& NewEntry = Entries.AddDefaulted_GetRef();  
+    NewEntry.Instance = NewObject<ULyraInventoryItemInstance>(OwnerComponent->GetOwner());  //@TODO: Using the actor instead of component as the outer due to UE-127172  
+    NewEntry.Instance->SetItemDef(ItemDef);
+    for (ULyraInventoryItemFragment* Fragment : GetDefault<ULyraInventoryItemDefinition>(ItemDef)->Fragments)  
+    {       
+	    if (Fragment != nullptr)  
+	    {          
+		    Fragment->OnInstanceCreated(NewEntry.Instance);  
+        }    
+    }    
+    
+    ...
+  
+    return Result;  
+}
+```
+
+我们用Definition和Stack参数AddEntry时，SetItemDef会向实例中填充数据，Fragment中的OnInstanceCreated也会向实例中填充数据。

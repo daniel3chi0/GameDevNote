@@ -211,7 +211,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 345.5
+    "width": 258.5
   },
   "right": {
     "id": "f90a995309f0c52a",
@@ -298,7 +298,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 384.5
+    "width": 264.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -312,7 +312,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "ab3691a31fdb5154",
+  "active": "75b58e5e42e3eb8d",
   "lastOpenFiles": [
     "开源项目分析/Lyra/Lyra背包系统/4.png",
     "模块相关/模块链接包含.md",
