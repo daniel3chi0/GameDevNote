@@ -23,7 +23,7 @@ Instance是实例，是UObject的子类，Instance通常是**Entry**中的一部
 - 在Equipment部分中作为ModularGameplay的PawnComponent的子类。
 - 在Weapons部分中作为ModularGameplay的ControllerComponent的子类（Controller组件顾名思义就是要挂在controller上的）。Weapons部分比较特殊，内部没FastArray结构的EntryList，取而代之的是两个结构体数组：屏幕空间的打击点数组，服务器侧打击点标记合批数组。
 
-# 一次实例生成过程
+# Inventory一次实例生成过程
 在Inventory部分有个接口Pickupable，里面有个纯虚函数GetPickupInventory。
 ![[开源项目分析/Lyra/Lyra背包系统/4.png]]
 
@@ -176,4 +176,53 @@ ULyraInventoryItemInstance* FLyraInventoryList::AddEntry(TSubclassOf<ULyraInvent
 }
 ```
 
-我们用Definition和Stack参数AddEntry时，SetItemDef会向实例中填充数据，Fragment中的OnInstanceCreated也会向实例中填充数据。
+上述代码中我们用Definition和Stack参数AddEntry时，SetItemDef会向实例中填充数据，Fragment中的OnInstanceCreated也会向实例中填充数据。
+SetItemDef很简单
+```cpp
+void ULyraInventoryItemInstance::SetItemDef(TSubclassOf<ULyraInventoryItemDefinition> InDef)  
+{  
+    ItemDef = InDef;  
+}
+```
+
+向实例中填充的fragment数据主要是对应fragment中InitialItemStats中的tag和stack。InitialItemStats是个TMap结构在编辑器中赋值。
+主要就是填充实例中的FGameplayTagStackContainer StatTags这个数组，同样是个FastArray结构。
+```cpp
+void UInventoryFragment_SetStats::OnInstanceCreated(ULyraInventoryItemInstance* Instance) const  
+{  
+    for (const auto& KVP : InitialItemStats)  
+    {       
+	    Instance->AddStatTagStack(KVP.Key, KVP.Value);  
+    }
+}
+```
+# InventoryItem实例在什么时候使用？
+根据前面的分析我们知道ItemInstance是Entry中的一部分。ItemInstance中持有Definition和Fragment信息。而Entry中主要包括Instance和StackCount。
+- FLyraInventoryList::GetAllItems()  获取背包中所有ItemInstance供外部使用。被ULyraInventoryManagerComponent调用，这个函数在蓝图中被使用。
+  ```cpp
+	TArray<ULyraInventoryItemInstance*> ULyraInventoryManagerComponent::GetAllItems() const  
+	{  
+	    return InventoryList.GetAllItems();  
+	}
+  ```
+
+	1. ULyraInventoryItemInstance是UObject的子类可以Add到TileViewWidget中
+	   ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/5.png]]
+	
+	2. 在行为树的服务中判断弹药数量
+	   ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/6.png]]
+	   
+- ULyraInventoryManagerComponent::FindFirstItemStackByDefinition()  返回背包中第一个定义匹配到的ItemInstance。
+  同样在蓝图中被使用。
+  在武器生成器中如下
+  ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/7.png]]
+  在EQS查询上下文中如下
+  ![[UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/8.png]]
+- ULyraInventoryManagerComponent::GetTotalItemCountByDefinition() 返回定义匹配上的ItemInstance的数量。
+  可选择在ULyraAbilityCost_InventoryItem::CheckCost使用，目前是屏蔽掉了这部分代码。
+
+# Equipment一次实例生成过程
+
+
+# Weapon一次实例生成过程
+  

@@ -183,8 +183,13 @@
       "bases:新建数据库": false
     }
   },
-  "active": "89527c35fb1e5228",
+  "active": "b719c1881c739969",
   "lastOpenFiles": [
+    "UnrealEngineNotes/AI - WorkFlow",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/8.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/7.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/6.png",
+    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/5.png",
     "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/4.png",
     "UnrealEngineNotes/Animations/LearnALSV4/同步组设置.md",
     "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/3.png",
@@ -214,11 +219,6 @@
     "UnrealEngineNotes/GAS相关/Attribute值变动触发流程.md",
     "UnrealEngineNotes/GAS相关/在GA中获取WorldContextObject.md",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计.md",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/56.png",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/55.png",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/54.png",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/53.png",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/52.png",
     "UnrealEngineNotes/OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计",
     "UnrealEngineNotes/Animations/LearnALSV4/LayerBlending.md",
