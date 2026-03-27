@@ -90,6 +90,7 @@
   "showPropertyLinks": true,
   "recent": {
     "file": [
+      "AI - WorkFlow/AI时代的基础概念名词.md",
       "开源项目分析/GD中的GAS设计.md",
       "开源项目分析/Lyra/Lyra背包系统.md",
       "模块相关/模块链接包含.md",
@@ -118,8 +119,7 @@
       "Animations/LearnALSV4/手持道具到OverlayLayer.md",
       "Game AI相关/状态树 StateTree Media/49.png",
       "Game AI相关/AI 行为树 Media/11.png",
-      "Game AI相关/AI 行为树 Media/6.png",
-      "模块相关/UE插件和模块Media/6.png"
+      "Game AI相关/AI 行为树 Media/6.png"
     ],
     "folder": []
   },
