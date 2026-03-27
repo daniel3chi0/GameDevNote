@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+                "file": "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lyra背包系统"
+              "title": "AI时代的基础概念名词"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 299.5
+    "width": 283.5
   },
   "right": {
     "id": "d9ee3a52352ee45c",
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+                "file": "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Lyra背包系统 的大纲"
+              "title": "AI时代的基础概念名词 的大纲"
             }
           }
         ],
@@ -170,7 +170,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 205.5
+    "width": 310.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,25 +185,31 @@
   },
   "active": "b719c1881c739969",
   "lastOpenFiles": [
-    "UnrealEngineNotes/AI - WorkFlow",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/8.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/7.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/6.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/5.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/4.png",
-    "UnrealEngineNotes/Animations/LearnALSV4/同步组设置.md",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/3.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/1.png",
-    "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统/2.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/34.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/33.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/32.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/31.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/30.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/29.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/28.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/27.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/26.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/25.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media/25.png",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词.md",
+    "UnrealEngineNotes/GameFeature.md",
+    "UnrealEngineNotes/模块相关/UE插件和模块.md",
     "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统.md",
+    "UnrealEngineNotes/开源项目分析/GD中的GAS设计.md",
+    "UnrealEngineNotes/AI - WorkFlow/AI时代的基础概念名词Media",
+    "UnrealEngineNotes/AI - WorkFlow",
+    "UnrealEngineNotes/Animations/LearnALSV4/同步组设置.md",
     "UnrealEngineNotes/开源项目分析/Lyra/Lyra背包系统",
     "UnrealEngineNotes/开源项目分析/Lyra",
     "UnrealEngineNotes/Animations/LearnALSV4/同骨架的骨骼网格体的动画蓝图的动态复用.md",
     "UnrealEngineNotes/Animations/LearnALSV4/重定向动画.md",
     "UnrealEngineNotes/Animations/LearnALSV4/Aim Offset瞄准偏移.md",
     "UnrealEngineNotes/Animations/LearnALSV4/手持道具到OverlayLayer.md",
-    "UnrealEngineNotes/Animations/LearnALSV4/手持道具Media/52.avif",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计/3.png",
     "UnrealEngineNotes/Animations/LearnALSV4/骨骼动画变换的不同空间的含义.md",
     "UnrealEngineNotes/Animations/LearnALSV4/动画层接口.md",
     "UnrealEngineNotes/Animations/LearnALSV4/叠加动画.md",
@@ -218,18 +224,12 @@
     "UnrealEngineNotes/GAS相关/GA预测key.md",
     "UnrealEngineNotes/GAS相关/Attribute值变动触发流程.md",
     "UnrealEngineNotes/GAS相关/在GA中获取WorldContextObject.md",
-    "UnrealEngineNotes/开源项目分析/GD中的GAS设计.md",
     "UnrealEngineNotes/OB2NotionT1 2cba95db5cc38150aa99c9ab7c0c18f3.md",
     "UnrealEngineNotes/开源项目分析/GD中的GAS设计",
     "UnrealEngineNotes/Animations/LearnALSV4/LayerBlending.md",
-    "UnrealEngineNotes/Animations/LearnALSV4/IK和FK.md",
-    "UnrealEngineNotes/Game AI相关/AI 行为树.md",
-    "UnrealEngineNotes/Plugin&Editor/UE4自定义可旋转Joystick.md",
     "UnrealEngineNotes/开源项目分析",
     "开源项目分析",
     "开源项目分析",
-    "UnrealEngineNotes/GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化",
-    "UnrealEngineNotes/GAS相关/GA预测key",
-    "UnrealEngineNotes/GAS相关/Attribute值变动触发流程"
+    "UnrealEngineNotes/GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化"
   ]
 }
