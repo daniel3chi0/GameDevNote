@@ -6,17 +6,17 @@ https://www.youtube.com/watch?v=WyyUPqdZQfU
 
 # Attribute
 属性中当前值的计算公式，这里有两个属性：生命值和治疗点数（治疗药水的数量）
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/1.png]]
+![[GAS相关/GIC-多人GAS（Media）/1.png]]
 
 # GE
 GE中的三种持续类型。分别在current value中充当的角色。
 - Instant Effect是直接作用到BaseValue上的。
 - Duration Effect和Infinite Effect都是作为GE Modifier的一部分和BaseValue一起构成CurrentValue。这两种ge可以添加和移除。移除后CurrentValue就会和BaseValue相等。
 在执行一次治疗能力中我们可能会用到两个GE。治疗的值和治疗的消耗。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/2.png]]
+![[GAS相关/GIC-多人GAS（Media）/2.png]]
 
 两个GE在编辑器中的样子，都使用Instant 类型。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/3.png]]
+![[GAS相关/GIC-多人GAS（Media）/3.png]]
 
 # GA
 负责封装所有技能逻辑，并把GE应用到属性上。
@@ -25,21 +25,36 @@ GE中的三种持续类型。分别在current value中充当的角色。
 3. 跑AbilityTask播放蒙太奇。
 4. 应用GE_Heal。
 5. 执行Gameplay Cue。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/4.png]]
+![[GAS相关/GIC-多人GAS（Media）/4.png]]
 
 # AT（AbilityTask）和 GC（Gameplay Cue）
 通常游戏技能GA是原子操作，只在一帧内运行完。
 如果你需要任何运行超过一帧的内容，就必须使用AbilityTask和游戏提示Gameplay Cue。Gameplay Cue是视听效果的容器，生成或者移除粒子发射器。下图是GA能做的所有功能。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/5.png]]
+![[GAS相关/GIC-多人GAS（Media）/5.png]]
 
 下图是蓝图中实现生命回复的技能逻辑图。Commit节点会检查冷却和消耗是否满足。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/6.png]]
+![[GAS相关/GIC-多人GAS（Media）/6.png]]
 
 # GAS中的额外步骤
 我们可以在PreAttributeChange中给Health属性夹值。
 可以在CanActivateAbility中判断能否激活能力，假如血量已经达到最大血量时应该不能激活能力。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/7.png]]
+![[GAS相关/GIC-多人GAS（Media）/7.png]]
 
 # UE多人游戏架构
 不使用GAS时多人网络通信，需要通过属性复制，RPC，和CMC。GAS中可以直接编写技能并处理网络复制。
-![[UnrealEngineNotes/GAS相关/GIC-多人GAS（Media）/8.png]]
+![[GAS相关/GIC-多人GAS（Media）/8.png]]
+
+**不使用GAS并且不预测** 的网络通信大概如下图所示。客户端检查先觉条件，把RPC发送给服务端。服务端再次检查先觉条件然后增加生命值，然后把生命值增加的信息发回给客户端。这套流程看似合理，但实际上没有预测是不可接受的。会产生严重的延迟。
+![[GAS相关/GIC-多人GAS（Media）/9.png]]
+
+**不使用GAS并且预测** 的网络通信大概如下图所示。利用ue中的的属性同步，如果客户端已经和服务器的值相等就不需要再同步了。
+整体流程如下所示。
+![[GAS相关/GIC-多人GAS（Media）/10.png]]
+
+这看起来没问题但是如果服务器判定你不能治疗会发生什么？这涉及到很多问题。
+我们需要等待这个确认吗？要等多久？
+我们需要回滚这个操作吗？
+如果玩家在治疗过程中受到伤害该怎么办？
+如果玩家已在治疗过程中又尝试了一次此时服务器还在处理上次的治疗，客户端当前又进行了一次治疗。当前一次治疗实际上并未生效。
+这种情况下会有很多复杂的问题你必须仔细考虑。而这还仅仅是治疗这一种情况。
+![[GAS相关/GIC-多人GAS（Media）/11.png]]
