@@ -90,8 +90,13 @@
   "showPropertyLinks": true,
   "recent": {
     "file": [
-      "GAS相关/GIC-多人GAS.md",
       "GameFeature.md",
+      "ModularGamePlay/GameFrameworkComponentManager.md",
+      "开源项目分析/GD中的GAS设计.md",
+      "模块相关/UE插件和模块.md",
+      "GAS相关/GIC-多人GAS.md",
+      "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
+      "GAS相关/在GA中获取WorldContextObject.md",
       "GAS相关/GIC-多人GAS（Media）/1.png",
       "Animations/LearnALSV4/VIrtual Bones Media/1.png",
       "开源项目分析/Lyra/Lyra动画蓝图的结构.md",
@@ -107,8 +112,6 @@
       "Excalidraw/Drawing 2026-04-04 23.41.33.excalidraw.md",
       "Test/OB2NotionT1.md",
       "Animations/LearnALSV4/叠加动画.md",
-      "GAS相关/SendGameplayEventToActor激活本地预测GA参数网络序列化.md",
-      "ModularGamePlay/GameFrameworkComponentManager.md",
       "Animations/LearnALSV4/Animation Slot.md",
       "Animations/LearnALSV4/Animation Montage.md",
       "Animations/LearnALSV4/ALSV4站立和蹲下状态.md",
@@ -116,9 +119,7 @@
       "Animations/LearnALSV4/同步组设置.md",
       "Animations/LearnALSV4/Virtual Bones 虚拟骨骼.md",
       "AI - WorkFlow/AI时代的基础概念名词.md",
-      "开源项目分析/GD中的GAS设计.md",
-      "开源项目分析/Lyra/Lyra背包系统.md",
-      "模块相关/模块链接包含.md"
+      "开源项目分析/Lyra/Lyra背包系统.md"
     ],
     "folder": []
   },
