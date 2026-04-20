@@ -87,6 +87,8 @@ void UTargetDataUnderMouse::OnTargetDataReplicatedCallback(const FGameplayAbilit
 }
 ```
 
+^295ae3
+
 
 在ue5.3之前我们可以在资源管理器中调用InitGlobalData。
 ```cpp
