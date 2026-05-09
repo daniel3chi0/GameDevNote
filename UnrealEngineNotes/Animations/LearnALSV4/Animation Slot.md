@@ -12,4 +12,7 @@ Animation Slot即动画插槽通常被用来和 [[Animation Montage]] 动画蒙�
    
    插槽用于[动画轨道](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/cinematic-animation-track-in-unreal-engine)中的动画。要使插槽中的动画播放，右键点击一个动画分段并找到 **属性（Properties） > 槽位名称（Slot Name）**。输入要插入的插槽的名称。
    ![Sequencer中使用插槽](https://d1iv7db44yhgxn.cloudfront.net/documentation/images/4a83869a-2d27-4b3b-af59-279989ca1eae/sequencer1.png)一个常见的在Sequencer中使用插槽的用例为将过场动画和游戏动画混合在一起。更多信息可以参考[混合Gameplay和Sequencer动画](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/blend-gameplay-animation-to-cinematic-animation-in-unreal-engine)页面。
-5. 插槽组不仅仅用于分类。当一个插槽正在运行时，再播放使用同组插槽的蒙太奇，正在运行的那个插槽便会被中断。这种自动的模式可以用于打断蒙太奇。例如，武器重装填动画蒙太奇可以被使用技能或者进战攻击的动画蒙太奇所打断。如果多个蒙太奇播放同插槽组中插槽上的动画，最近的蒙太奇则会打断前一个。
+   
+5.  插槽组不仅仅用于分类。当一个插槽正在运行时，再播放使用同组插槽的蒙太奇，正在运行的那个插槽便会被中断。这种自动的模式可以用于打断蒙太奇。例如，武器重装填动画蒙太奇可以被使用技能或者进战攻击的动画蒙太奇所打断。如果多个蒙太奇播放同插槽组中插槽上的动画，最近的蒙太奇则会打断前一个。
+
+6. ![[Animation Montage#动画蒙太奇的插槽中可以是叠加动画]]

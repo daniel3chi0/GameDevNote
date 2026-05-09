@@ -15,3 +15,18 @@
    
 3. 动画蓝图和蒙太奇相关的默认值使用关联[[分层动画蓝图]]
    ![[Animations/LearnALSV4/Animation Montage Media/6.png]]
+
+# 动画蒙太奇的插槽中可以是叠加动画
+
+通常我们在动画蒙太奇的插槽中用的是AnimationSequence，但也可以是Additive Animation类型的AnimationSequence。
+**Slot 节点本身已经内置了处理 Additive 动画的能力**，不需要额外连接 `Apply Additive` 节点。Slot 节点的输入是普通的 Local Space FK 数据，输出也是。当你把 Local Space Additive 或 Mesh Space Additive 动画丢给它，它会自动把这些 Additive 叠加到输入上再输出。如果混合了不同类型的数据，Slot 节点也会正确处理 Blend Out。
+
+| Slot 输入  | Slot 内 Montage 类型 | 输出结果                                  |
+| -------- | ----------------- | ------------------------------------- |
+| 普通动画     | 普通 Montage        | Montage 覆盖输入（Blend）                   |
+| 普通动画     | Additive Montage  | 输入 + Additive 叠加                      |
+| Additive | Additive Montage  | Additive A + Additive B               |
+| Additive | 普通 Montage        | 取决于 bAdditiveAnimationsOverrideSource |
+
+**特殊情况：强制覆盖模式**
+Slot 节点有一个 `bAdditiveAnimationsOverrideSource` 选项，设为 `true` 时，即使传入的是 Additive 动画，Slot 也会把它当成普通动画数据来处理，执行覆盖（Switch）而不是叠加。适合子树中全部都是 Additive 数据的特殊场景。

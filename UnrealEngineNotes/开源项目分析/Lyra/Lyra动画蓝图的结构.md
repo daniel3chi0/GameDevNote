@@ -25,3 +25,8 @@ Lyra中LinkAnimClassLayers的操作是在激活武器的时候。
 
 整体流程如知乎上这张图。
 ![[开源项目分析/Lyra/Lyra动画蓝图的结构/6.png]]
+
+# AnimGraph逻辑分布
+在这套系统中AnimGraph主要分布在主动画蓝图也就是ABP_ManneQuin_Base的AnimGraph中。
+## Locomotion Pose
+![[开源项目分析/Lyra/Lyra动画蓝图的结构/7.png]]
