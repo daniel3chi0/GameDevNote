@@ -36,15 +36,15 @@ ViewTarget 结构体在PlayerCameraManager中定义，负责向 PlayerCameraMana
 
 # 调试
 - 可在命令行输入 ShowDebug CAMERA 来展示相机相关属性状态。可在自定义的 UCameraModifier 的 DisplayDebug 方法中添加自己的信息。
-  ![[Camera/Unreal默认相机系统/1.png]]
+  ![[Camera/Unreal默认相机系统Media/1.png]]
 
 - 可在 Outline 里取消 CameraComponent 的 HiddenInGame 以达到在 PIE 下显示相机位置的目的。
 
 # 类图示
 
-![[Camera/Unreal默认相机系统/2.png]]
+![[Camera/Unreal默认相机系统Media/2.png]]
 
-![[Camera/Unreal默认相机系统/9.png]]
+![[Camera/Unreal默认相机系统Media/9.png]]
 
 相机系统的关键类和对应的函数如上图所示。
 其中 APlayerCameraManager 是枢纽，其中缓存着包含相机位置和旋转等信息的 FCameraCacheEntry CameraCachePrivate ，相机管理器内部通过 SetCameraCachePOV 对其进行修改调整，外部通过 GetCameraViewPoint 对其进行获取。
@@ -52,23 +52,23 @@ ViewTarget 结构体在PlayerCameraManager中定义，负责向 PlayerCameraMana
 
 # 更新流程
 
-![[Camera/Unreal默认相机系统/3.png]]
+![[Camera/Unreal默认相机系统Media/3.png]]
 
 # 时序图
 - 通过 APlayerCameraManager 调整 APlayerController 的旋转等
-  ![[Camera/Unreal默认相机系统/4.png]]
+  ![[Camera/Unreal默认相机系统Media/4.png]]
 
 - 基于 APlayerController 等的旋转来控制 USpringArmComponent 与 UCameraComponent 的旋转等
-  ![[Camera/Unreal默认相机系统/5.png]]
+  ![[Camera/Unreal默认相机系统Media/5.png]]
 
 - 基于 UCameraComponent 或 APlayerController 设置 APlayerCameraManager 中的 CameraCachePrivate.POV
-  ![[Camera/Unreal默认相机系统/6.png]]
+  ![[Camera/Unreal默认相机系统Media/6.png]]
 
 - 拿到 APlayerCameraManager 中的 CameraCachePrivate.POV 初始化 FViewInfo 等
-  ![[Camera/Unreal默认相机系统/7.png]]
+  ![[Camera/Unreal默认相机系统Media/7.png]]
 
 - 利用 FViewInfo 进行绘制等操作
-  ![[Camera/Unreal默认相机系统/8.png]]
+  ![[Camera/Unreal默认相机系统Media/8.png]]
 
 # GamePlay流程
 
@@ -89,7 +89,7 @@ UWorld::Tick()
 					SetCameraCacheTime(CurrentGameTime);
 ```
 
-![[Camera/Unreal默认相机系统/10.png]]
+![[Camera/Unreal默认相机系统Media/10.png]]
 
 # Render流程
 
@@ -126,4 +126,4 @@ UE的摄像机系统框架的主要流程如下：
 - FMinimalViewInfo 来执行视口判定等逻辑，如窗口绘制、关卡的流式加载、世界分区、音频、界面、Niagara 等。
 - DoUpdateCamera中的更新流程：先更新FTViewTarget然后转入更新FMinimalViewInfo ; 最后利用FMinimalViewInfo更新FCameraCacheEntry CameraCachePrivate;CameraCachePrivate则暴露给外界使用
 - APlayerCameraManager::UpdateViewTarget 计算给定/有效的ViewTarget去更新POV
-- APlayerCameraManager::UpdateViewTargetInternal中会判断BlueprintUpdateCamera是否被蓝图重写，如果没有则调用ViewTarget.Target->CalcCamera();
+- APlayerCameraManager::UpdateViewTargetInternal中会判断BlueprintUpdateCamera是否被蓝图重写，如果没有则调用ViewTarget.Target->CalcCamera(); ^7eaf4f
