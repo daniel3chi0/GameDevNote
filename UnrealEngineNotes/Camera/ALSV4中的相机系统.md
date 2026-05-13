@@ -30,5 +30,5 @@ ALS中默认角色ALS_AnimMan_CharacterBP中是没有挂载CameraComponent的。
 
 CustomCameraBehavior中会使用之前动画图表中的曲线值。
 - Step1：中用接口函数返回获取 **PivotTarget**（角色Mesh上的head和root的socket的中点的Transform），**FPTarget**（角色Mesh上的FP_Camera的Socket的WorldLocation，位置在Mesh的眼睛的位置中间），**TPFOV和FPFOV**（角色蓝图上甚设置的第三人称和第一人称的FOV浮点值）
-- Step2：把PlayerCamera
+- Step2：把PlayerCamera的Rotation旋转插值到控制器的Rotation，观察了下使用RotationLagSpeed的曲线值在各个状态中都设置为恒定20，后面的DebugViewRotation是在ALS_PlayerCameraManager中设定的一个固定旋转值，Override_Debug曲线在整个项目中没有找到修改的地方应该是供我们测试的时候修改。
 ![[Camera/ALSV4中的相机系统Media/6.png]]
