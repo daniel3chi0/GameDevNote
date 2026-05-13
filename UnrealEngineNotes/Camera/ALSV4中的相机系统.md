@@ -30,5 +30,19 @@ ALS中默认角色ALS_AnimMan_CharacterBP中是没有挂载CameraComponent的。
 
 CustomCameraBehavior中会使用之前动画图表中的曲线值。
 - Step1：中用接口函数返回获取 **PivotTarget**（角色Mesh上的head和root的socket的中点的Transform），**FPTarget**（角色Mesh上的FP_Camera的Socket的WorldLocation，位置在Mesh的眼睛的位置中间），**TPFOV和FPFOV**（角色蓝图上甚设置的第三人称和第一人称的FOV浮点值）
-- Step2：把PlayerCamera的Rotation旋转插值到控制器的Rotation，观察了下使用RotationLagSpeed的曲线值在各个状态中都设置为恒定20，后面的DebugViewRotation是在ALS_PlayerCameraManager中设定的一个固定旋转值，Override_Debug曲线在整个项目中没有找到修改的地方应该是供我们测试的时候修改。
+- Step2：把PlayerCamera的Rotation旋转插值到控制器的Rotation，观察了下使用RotationLagSpeed的曲线值在各个状态中都设置为恒定20，后面的DebugViewRotation是在ALS_PlayerCameraManager中设定的一个固定旋转值供我们测试的时候，强制把相机转到角色的正面，Override_Debug曲线值是作为一个开关来打开这个功能。在ALS_Player_Controller中操作开关，通过BPI_GetDebugInfo在ALS_PlayerCameraBehavior的EventBlueprintUpdateAnimation的UpdateCharacterInfo中赋值，缓存成DebugView变量，最终在其动画图表的DebugViewOverride注释块中根据缓存的DebugView变量修改OverrideDebug曲线值为1或0。
 ![[Camera/ALSV4中的相机系统Media/6.png]]
+
+- Step3：通过自定义函数CalculateAxisIndependentLag（计算轴的独立滞后），输出一个Location结果。
+  这里把相机的Rotation（欧拉角）只保留Yaw分量，然后把CurrentLocation和TargetLocation这两个世界坐标反旋转相机的Rotation（即转成相机坐标系中表示这两个向量，如果不这样Lag的时候`SmoothedPivotTarget（平滑的支点目标）.Location`会和我们想要的结果有细微偏差，因为是和LagSpeeds这个相对于相机空间的向量的xyz轴向的分量进行FInterp）**这点还是很细的！！**
+  ![[Camera/ALSV4中的相机系统Media/10.png]]
+  参数：
+  1. `CurrentLocation`取自ALS_PlayerCameraManager中的`SmoothedPivotTarget（平滑的支点目标）.Location`。
+  2. `TargetLocation`取自ALS_PlayerCameraManager中的`PivotTarget（支点目标）.Location`。
+  3. `CameraRotation`取自ALS_PlayerCameraManager中的`TargetCameraRotation`。
+  4. `LagSpeeds`取自根据曲线PivotLagSpeed_X，PivotLagSpeed_Y，PivotLagSpeed_Z的值组成的vector值。
+  注释中提到`SmoothedPivotTarget（平滑的支点目标）`是OrangeSphere。`PivotTarget（支点目标）`是GreenSphere。可以在debug模式下查看这些Sphere：OrangeSphere其实是和我们的runtime中的相机位置正相关，因为其是滞后点和相机同步滞后。复原时OrangeSphere和GreenSphere重叠，相机也和OrangeSphere一起复位。
+  ![[Camera/ALSV4中的相机系统Media/9.png]]
+- Step4：引入了一个新概念叫Pivot Location（支点位置）注释中写到这个位置代表debug中的BlueSphere
+- Step5：
+![[Camera/ALSV4中的相机系统Media/11.png]]
