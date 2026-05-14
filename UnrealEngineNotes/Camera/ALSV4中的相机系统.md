@@ -43,6 +43,6 @@ CustomCameraBehavior中会使用之前动画图表中的曲线值。
   4. `LagSpeeds`取自根据曲线PivotLagSpeed_X，PivotLagSpeed_Y，PivotLagSpeed_Z的值组成的vector值。
   注释中提到`SmoothedPivotTarget（平滑的支点目标）`是OrangeSphere。`PivotTarget（支点目标）`是GreenSphere。可以在debug模式下查看这些Sphere：OrangeSphere其实是和我们的runtime中的相机位置正相关，因为其是滞后点和相机同步滞后。复原时OrangeSphere和GreenSphere重叠，相机也和OrangeSphere一起复位。
   ![[Camera/ALSV4中的相机系统Media/9.png]]
-- Step4：引入了一个新概念叫Pivot Location（支点位置）注释中写到这个位置代表debug中的BlueSphere
+- Step4：引入了一个新概念叫Pivot Location（支点位置）注释中写到这个位置代表debug中的BlueSphere，在Step3中计算得出`SmoothedPivotTarget.Rotation`其实是`PivotTarget的Rotation`也就是ALS_AnimMan_CharacterBP的`ActorRotation`。接着用`SmoothedPivotTarget.Rotation`的xyz基向量乘PivotOffset_X，PivotOffset_Y，PivotOffset_Z的曲线值附加到`SmoothedPivotTarget.Location`上最后的结果赋值到PivotLocation上。
 - Step5：
 ![[Camera/ALSV4中的相机系统Media/11.png]]
