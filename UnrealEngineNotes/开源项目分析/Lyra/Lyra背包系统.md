@@ -11,6 +11,9 @@ Weapons：
 
 可以看到这三个模块都使用几个相似的类：Fragment，Definition，Instance，Entry，ManagerComponent，武器侧则是StateComponent比较特殊一点。
 
+用AI生成的框架图
+![[开源项目分析/Lyra/Lyra背包系统/9.png]]
+
 # Fragment
 Fragment是片段的意思，是UObject的子类，被Definition所持有。
 # Definition
