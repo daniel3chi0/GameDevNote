@@ -74,7 +74,7 @@ ILyraCameraAssistInterface中声明这几个接口：
   ```
 
 # LyraCameraComponent
-LyraCameraComponent中的成员变量：
+## LyraCameraComponent中的成员变量：
 ```cpp
 public:
 	// Delegate used to query for the best camera mode.  
@@ -89,4 +89,69 @@ protected:
 	float FieldOfViewOffset;
 ```
 - DetermineCameraModeDelegate在ULyraHeroComponent::HandleChangeInitState中找到相机组件的时候绑定。在ULyraCameraComponent::UpdateCameraModes()中如果CameraModeStack是激活的调用DetermineCameraModeDelegate返回一个CameraMode然后Push到CameraModeStack中。
-- CameraModeStack变量名字可以很明显的看出是个栈结构。内部维护两个`ULyraCameraMode`类型数组变量CameraModeInstances，CameraModeStack。
+- CameraModeStack变量名字可以很明显的看出是个栈结构。内部维护两个`ULyraCameraMode`类型数组变量`CameraModeInstances`，`CameraModeStack`。以及内部实现的栈方法。
+  **CameraModeInstances**使用的地方如下get的时候没有实例就Add进CameraModeInstances。`CameraModeInstances`充当对象池的角色。
+	```cpp
+	APlayerController::SpawnPlayerCameraManager()
+		void APlayerCameraManager::InitializeFor(APlayerController* PC)
+			void APlayerCameraManager::UpdateCamera(float DeltaTime)
+							&&
+	void UWorld::Tick( ELevelTick TickType, float DeltaSeconds )
+		void APlayerController::UpdateCameraManager(float DeltaSeconds)
+			void APlayerCameraManager::UpdateCamera(float DeltaTime)
+				void APlayerCameraManager::DoUpdateCamera(float DeltaTime)
+					void APlayerCameraManager::UpdateViewTarget(FTViewTarget& OutVT, float DeltaTime)
+						void APlayerCameraManager::UpdateViewTargetInternal(FTViewTarget& OutVT, float DeltaTime)
+							void AActor::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
+								void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)
+									void ULyraCameraComponent::UpdateCameraModes()
+										 ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)
+											 ULyraCameraMode* CameraMode = GetCameraModeInstance(CameraModeClass);
+			 
+	ULyraCameraMode* ULyraCameraModeStack::GetCameraModeInstance(TSubclassOf<ULyraCameraMode> CameraModeClass)
+	{
+		check(CameraModeClass);
+	
+		// First see if we already created one.
+		for (ULyraCameraMode* CameraMode : CameraModeInstances)
+		{
+			if ((CameraMode != nullptr) && (CameraMode->GetClass() == CameraModeClass))
+			{
+				return CameraMode;
+			}
+		}
+	
+		// Not found, so we need to create it.
+		ULyraCameraMode* NewCameraMode = NewObject<ULyraCameraMode>(GetOuter(), CameraModeClass, NAME_None, RF_NoFlags);
+		check(NewCameraMode);
+	
+		CameraModeInstances.Add(NewCameraMode);
+	
+		return NewCameraMode;
+	}
+	```
+
+  **CameraModeStack**是当前激活的相机模式的栈。使用到的地方就比较多了
+	- `ULyraCameraModeStack::ActivateStack()`和`ULyraCameraModeStack::DeactivateStack()`中对Stack中的CameraMode遍历调用`OnActivation()`和`OnDeactivation()`。
+	- `void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)`中涉及`CameraModeStack`的RemoveAt，Insert和Last()操作。
+	- `ULyraCameraModeStack::UpdateStack(float DeltaTime)`移除BlendWeight>=1时元素上方的所有元素。
+	- `void ULyraCameraModeStack::BlendStack(FLyraCameraModeView& OutCameraModeView) const` 中把`FLyraCameraModeView& OutCameraModeView`从`CameraModeStack`栈底（Array的底端）开始Blend。
+	- `ULyraCameraModeStack::GetBlendInfo(float& OutWeightOfTopLayer, FGameplayTag& OutTagOfTopLayer) const`返回栈底（CameraModeStack.Last()）元素权重和tag。
+- FieldOfViewOffset译为视野偏移，在`void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)`中给经过CameraModeStack->EvaluateStack的FLyraCameraModeView CameraModeView.FieldOfView加上这个偏移。
+
+## 比较重要的方法
+- `virtual void UpdateCameraModes()`: 属于是Tick级别的方法前面以及提及了，主要是调用CameraModeStack->PushCameraMode(CameraMode);
+- `virtual void GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView) override`: 也在上面函数的调用栈中，用来返回一个FMinimalViewInfo& DesiredView会从CameraModeStack->EvaluateStack中计算所需要的数据。
+```cpp
+  void AActor::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
+	void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)
+		void ULyraCameraComponent::UpdateCameraModes()
+```
+
+- `virtual void OnRegister() override`: 重写ActorComponent中的组件注册事件，一开始CameraModeStack为空会New一个对象。
+
+# LyraCameraMode
+这个文件中定义了几个类或结构体
+- **ULyraCameraMode**：UObject的子类，内部有几个比较重要的变量FGameplayTag CameraTypeTag，FLyraCameraModeView View，
+- **ULyraCameraModeStack**：
+- **FLyraCameraModeView**：
