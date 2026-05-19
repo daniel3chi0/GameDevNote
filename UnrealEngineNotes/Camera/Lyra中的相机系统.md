@@ -131,7 +131,7 @@ protected:
 	}
 	```
 
-  **CameraModeStack**是当前激活的相机模式的栈。使用到的地方就比较多了
+  **CameraModeStack**是当前激活的相机模式的栈。使用到的地方就比较多了 ^66829e
 	- `ULyraCameraModeStack::ActivateStack()`和`ULyraCameraModeStack::DeactivateStack()`中对Stack中的CameraMode遍历调用`OnActivation()`和`OnDeactivation()`。
 	- `void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)`中涉及`CameraModeStack`的RemoveAt，Insert和Last()操作。
 	- `ULyraCameraModeStack::UpdateStack(float DeltaTime)`移除BlendWeight>=1时元素上方的所有元素。
@@ -152,6 +152,31 @@ protected:
 
 # LyraCameraMode
 这个文件中定义了几个类或结构体
-- **ULyraCameraMode**：UObject的子类，内部有几个比较重要的变量FGameplayTag CameraTypeTag，FLyraCameraModeView View，
-- **ULyraCameraModeStack**：
-- **FLyraCameraModeView**：
+- **ULyraCameraMode**：UObject的子类在CameraModeStack中作为栈元素（即一组位置旋转混合数据），内部有几个比较重要的变量
+  `FGameplayTag CameraTypeTag`：CameraMode对应的Tag。
+  `FLyraCameraModeView View`：在下面
+  `float BlendTime，float BlendAlpha，float BlendWeight`：
+  - float BlendTime（在CameraMode构造函数中设置为0.5f），float BlendAlpha 在`void ULyraCameraMode::UpdateBlending(float DeltaTime)`中根据DeltaTime更新BlendWeight，调用栈如下：
+   ```cpp
+	  void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)
+		  void ULyraCameraComponent::UpdateCameraModes()
+		  //...
+		  bool ULyraCameraModeStack::EvaluateStack(float DeltaTime, FLyraCameraModeView& OutCameraModeView)
+			  void ULyraCameraModeStack::UpdateStack(float DeltaTime)
+				  void ULyraCameraMode::UpdateCameraMode(float DeltaTime)
+					  void ULyraCameraMode::UpdateBlending(float DeltaTime)
+   ```
+  - `void ULyraCameraMode::SetBlendWeight(float Weight)`中根据传入的Weight设置BlendWeight并更新BlendAlpha，调用栈如下：
+    ```cpp
+    void ULyraCameraComponent::UpdateCameraModes()
+	    void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)
+		    void ULyraCameraMode::SetBlendWeight(float Weight)
+    ```
+    SetBlendWeight一定在UpdateBlending之前调用，计算出的BlendAlpha再用来计算UpdateBlending中的BlendWeight的。然后用这个UpdateBlending中的BlendWeight再计算下次SetBlendWeight的BlendAlpha。
+- **ULyraCameraModeStack**：UObject的子类前面介绍了被LyraCameraComponent所有[[Lyra中的相机系统#^66829e]]。前面没提到的几个方法介绍：
+  `bool EvaluateStack(float DeltaTime, FLyraCameraModeView& OutCameraModeView)`：里面主要是依次调用UpdateStack(DeltaTime); 
+  BlendStack(OutCameraModeView);
+  `ActivateStack()和DeactivateStack()`：遍历调用CameraMode中的OnActivation和OnDeactivation函数。
+- **FLyraCameraModeView**：一个简单的结构体内部有FVector Location，FRotator Rotation，FRotator ControlRotation，float FieldOfView这几个变量。
+
+## LyraCameraMode_ThridPerson
