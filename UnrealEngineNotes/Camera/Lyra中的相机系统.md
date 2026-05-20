@@ -73,8 +73,8 @@ ILyraCameraAssistInterface中声明这几个接口：
 }
   ```
 
-# LyraCameraComponent
-## LyraCameraComponent中的成员变量：
+# ULyraCameraComponent
+## ULyraCameraComponent中的成员变量：
 ```cpp
 public:
 	// Delegate used to query for the best camera mode.  
@@ -150,33 +150,55 @@ protected:
 
 - `virtual void OnRegister() override`: 重写ActorComponent中的组件注册事件，一开始CameraModeStack为空会New一个对象。
 
-# LyraCameraMode
+# ULyraCameraMode
 这个文件中定义了几个类或结构体
-- **ULyraCameraMode**：UObject的子类在CameraModeStack中作为栈元素（即一组位置旋转混合数据），内部有几个比较重要的变量
+- **ULyraCameraMode**：UObject的子类在CameraModeStack中作为栈元素（即一组位置旋转和混合相关的数据）
+  **内部有几个比较重要的变量：**
   `FGameplayTag CameraTypeTag`：CameraMode对应的Tag。
   `FLyraCameraModeView View`：在下面
   `float BlendTime，float BlendAlpha，float BlendWeight`：
-  - float BlendTime（在CameraMode构造函数中设置为0.5f），float BlendAlpha 在`void ULyraCameraMode::UpdateBlending(float DeltaTime)`中根据DeltaTime更新BlendWeight，调用栈如下：
-   ```cpp
-	  void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)
-		  void ULyraCameraComponent::UpdateCameraModes()
-		  //...
-		  bool ULyraCameraModeStack::EvaluateStack(float DeltaTime, FLyraCameraModeView& OutCameraModeView)
-			  void ULyraCameraModeStack::UpdateStack(float DeltaTime)
-				  void ULyraCameraMode::UpdateCameraMode(float DeltaTime)
-					  void ULyraCameraMode::UpdateBlending(float DeltaTime)
-   ```
-  - `void ULyraCameraMode::SetBlendWeight(float Weight)`中根据传入的Weight设置BlendWeight并更新BlendAlpha，调用栈如下：
-    ```cpp
-    void ULyraCameraComponent::UpdateCameraModes()
-	    void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)
-		    void ULyraCameraMode::SetBlendWeight(float Weight)
-    ```
-    SetBlendWeight一定在UpdateBlending之前调用，计算出的BlendAlpha再用来计算UpdateBlending中的BlendWeight的。然后用这个UpdateBlending中的BlendWeight再计算下次SetBlendWeight的BlendAlpha。
+	  1. float BlendTime（在CameraMode构造函数中设置为0.5f），float BlendAlpha 在`void ULyraCameraMode::UpdateBlending(float DeltaTime)`中根据DeltaTime更新BlendWeight，调用栈如下：
+	   ```cpp
+		  void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView)
+			  void ULyraCameraComponent::UpdateCameraModes()
+			  //...
+			  bool ULyraCameraModeStack::EvaluateStack(float DeltaTime, FLyraCameraModeView& OutCameraModeView)
+				  void ULyraCameraModeStack::UpdateStack(float DeltaTime)
+					  void ULyraCameraMode::UpdateCameraMode(float DeltaTime)
+						  void ULyraCameraMode::UpdateBlending(float DeltaTime)
+	   ```
+	  2. `void ULyraCameraMode::SetBlendWeight(float Weight)`中根据传入的Weight设置BlendWeight并更新BlendAlpha，调用栈如下：
+	    ```cpp
+	    void ULyraCameraComponent::UpdateCameraModes()
+		    void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode> CameraModeClass)
+			    void ULyraCameraMode::SetBlendWeight(float Weight)
+	    ```
+	    SetBlendWeight一定在UpdateBlending之前调用，计算出的BlendAlpha再用来计算UpdateBlending中的BlendWeight的。然后用这个UpdateBlending中的BlendWeight再计算下次SetBlendWeight的BlendAlpha。
+		GetBlendTime()：
+		1. 会在ULyraCameraModeStack::PushCameraMode中控制下次传入CameraMode中的BlendWeight。
+		GetBlendWeight()：
+		2. 会在ULyraCameraModeStack::PushCameraMode中提供下次传入CameraMode中的BlendWeight的数据。
+		3. 在ULyraCameraModeStack::UpdateStack中控制要移除的栈元素的Index。
+		4. 会在ULyraCameraModeStack::BlendStack中参与混合CameraModeView。
+		5. 在ULyraRangedWeaponInstance::UpdateMultipliers中根据CameraComponent->GetBlendInfo拿到栈底元素的（外界称其为TopCameraWeight）BlendWeight。将其赋值给AimingAlpha，随后参与一些列计算赋值给ULyraRangedWeaponInstance中的CurrentSpreadAngleMultiplier：（这里有些数学计算后续再分析）[[Lyra中的AimingAlpha和CurrentSpreadAngleMultiplier]]
+			1. 最终在LyraGameplayAbility_RangedWeapon中参与计算单个子弹的打击终点。
+			2. ULyraReticleWidgetBase::ComputeSpreadAngle()中参与计算并返回ActualSpreadAngle。然后在ULyraReticleWidgetBase::ComputeMaxScreenspaceSpreadRadius()中通过接口PC->ProjectWorldLocationToScreen投影到屏幕空间.
+
+  **几个比较重要的函数：**
+  1. GetLyraCameraComponent()：返回Outer，虽然CameraMode是在ULyraCameraModeStack::GetCameraModeInstance中被NewObject出来的但是使用的Outer是ULyraCameraModeStack的Outer，也就是LyraCameraComponent。
+  2. GetTargetActor()：返回Outer即LyraCameraComponent的Owner。
+  3. GetPivotLocation()：返回相机位置默认是在Pawn的眼睛处的位置，这里处理了下蹲ACharacter::Crouch()后的相机位置调整为和站立时一致。
+  4. GetPivotRotation()：返回TargetActor的rotation，如果是Pawn就是GetViewRotation，如果是Actor就是ActorRotation。
+  5. UpdateView()：通过PivotLocation和PivotRotation更新View
+  6. 其余的是在上面有提及的一些函数。
+  
+  
 - **ULyraCameraModeStack**：UObject的子类前面介绍了被LyraCameraComponent所有[[Lyra中的相机系统#^66829e]]。前面没提到的几个方法介绍：
   `bool EvaluateStack(float DeltaTime, FLyraCameraModeView& OutCameraModeView)`：里面主要是依次调用UpdateStack(DeltaTime); 
   BlendStack(OutCameraModeView);
   `ActivateStack()和DeactivateStack()`：遍历调用CameraMode中的OnActivation和OnDeactivation函数。
 - **FLyraCameraModeView**：一个简单的结构体内部有FVector Location，FRotator Rotation，FRotator ControlRotation，float FieldOfView这几个变量。
 
-## LyraCameraMode_ThridPerson
+## ULyraCameraMode_ThridPerson
+ULyraCameraMode的子类，从名字中可以看出来是专门用于第三人称的的CameraMode。
+重写了基类中的中的UpdateView函数。
