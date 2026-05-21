@@ -64,7 +64,7 @@ ILyraCameraAssistInterface中声明这几个接口：
 	        }    
 	    }
 	}
-  ```
+  ``` ^b5205d
 - OnCameraPenetratingTarget()（相机正在穿透目标行为函数），在接口中无实现在`ALyraPlayerController`中重写如下：
   ```cpp
   void ALyraPlayerController::OnCameraPenetratingTarget()  
@@ -200,5 +200,75 @@ protected:
 - **FLyraCameraModeView**：一个简单的结构体内部有FVector Location，FRotator Rotation，FRotator ControlRotation，float FieldOfView这几个变量。
 
 ## ULyraCameraMode_ThridPerson
-ULyraCameraMode的子类，从名字中可以看出来是专门用于第三人称的的CameraMode。
-重写了基类中的中的UpdateView函数。
+ULyraCameraMode的子类，从名字中可以看出来是专门用于第三人称的CameraMode。
+## 重写的函数
+- 重写了**UpdateView**函数：相比于基类中的函数主要改动就是对View.Location的赋值不再是简单的GetPivotLocation()的默认值。而是GetPivotLocation()+CurrentCrouchOffset+PivotRotation.RotateVector(TargetOffset)。
+- 重写了**DrawDebug**函数：调用基类方法后，ENABLE_DRAW_DEBUG时（即非Shipping包时）多输出相机阻挡物的Name。
+
+## 新添加的函数
+- **UpdateForTarget**：在UpdateView中一开始调用，属于tick链路中的一个环节。主要是判断是否是Crouched状态，如果是的话调用SetTargetCrouchOffset应用下端的偏移量。
+- **UpdatePreventPenetration**：[[Lyra中的相机系统#^b5205d]]
+- **PreventCameraPenetration**：在UpdatePreventPenetration中调用返回一个AimLine到目标位置阻挡的百分比浮点值。如果AimLineToDesiredPosBlockedPct < ReportPenetrationPercent 时就触发Assist->OnCameraPenetratingTarget(); 在Lyra项目中只有在ALyraPlayerController中实现OnCameraPenetratingTarget让bHideViewTargetPawnNextFrame=true。会在ALyraPlayerController::UpdateHiddenComponents中让该PlayerController上的PlayerCameraManager的ViewTarget的所有组件在渲染线程中隐藏。这段逻辑用人话说就是阻挡物如果离相机镜头太近就会被隐藏，这个是镜头前的阻挡。这里计算量挺大的可以单独开一个坑了。[[Lyra的镜前阻挡物剔除Penetration]]
+
+## 新加的变量
+新加的变量还是相对比较多的，基本是和穿透Penetration和CrouchOffset相关的。
+
+# LyraPenetrationAvoidanceFeeler（穿透避免探测器）
+是个结构体，注释中提到：定义了一种用于避免相机穿透的探测射线的结构。
+内部没有函数而是定义了一系列变量：
+```cpp
+/** FRotator describing deviance from main ray */  
+UPROPERTY(EditAnywhere, Category=PenetrationAvoidanceFeeler)  
+FRotator AdjustmentRot;  
+  
+/** how much this feeler affects the final position if it hits the world */  
+UPROPERTY(EditAnywhere, Category=PenetrationAvoidanceFeeler)  
+float WorldWeight;  
+  
+/** how much this feeler affects the final position if it hits a APawn (setting to 0 will not attempt to collide with pawns at all) */  
+UPROPERTY(EditAnywhere, Category=PenetrationAvoidanceFeeler)  
+float PawnWeight;  
+  
+/** extent to use for collision when tracing this feeler */  
+UPROPERTY(EditAnywhere, Category=PenetrationAvoidanceFeeler)  
+float Extent;  
+
+/** minimum frame interval between traces with this feeler if nothing was hit last frame */  
+UPROPERTY(EditAnywhere, Category=PenetrationAvoidanceFeeler)  
+int32 TraceInterval;  
+  
+/** number of frames since this feeler was used */  
+UPROPERTY(transient)  
+int32 FramesUntilNextTrace;
+```
+
+探测器这个名词和这些变量注释都比较抽象不太好理解。看下这个结构体实际用到的地方。
+Lyra项目中在第三人称的CameraMode中使用到。ULyraCameraMode_ThirdPerson中定义了探测器的数组
+```cpp
+/**
+这些是用于确定摄像机放置位置的探测光束。
+* 编号：0 ：这是我们常用的常规探测光束，用于避免碰撞。
+* 编号：1+ ：如果“bDoPredictiveAvoidance=true”，则使用这些探测光束来扫描潜在的碰撞情况，假设玩家会朝那个方向旋转并与摄像机发生初步碰撞，从而在碰撞到遮挡物之前使摄像机收回。
+*/
+UPROPERTY(EditDefaultsOnly, Category = "Collision")  
+TArray<FLyraPenetrationAvoidanceFeeler> PenetrationAvoidanceFeelers;
+```
+
+在构造函数中向数组中创建添加结构体对象
+```cpp
+ULyraCameraMode_ThirdPerson::ULyraCameraMode_ThirdPerson()
+{
+	TargetOffsetCurve = nullptr;
+
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+00.0f, +00.0f, 0.0f), 1.00f, 1.00f, 14.f, 0));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+00.0f, +16.0f, 0.0f), 0.75f, 0.75f, 00.f, 3));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+00.0f, -16.0f, 0.0f), 0.75f, 0.75f, 00.f, 3));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+00.0f, +32.0f, 0.0f), 0.50f, 0.50f, 00.f, 5));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+00.0f, -32.0f, 0.0f), 0.50f, 0.50f, 00.f, 5));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(+20.0f, +00.0f, 0.0f), 1.00f, 1.00f, 00.f, 4));
+	PenetrationAvoidanceFeelers.Add(FLyraPenetrationAvoidanceFeeler(FRotator(-20.0f, +00.0f, 0.0f), 0.50f, 0.50f, 00.f, 4));
+}
+
+```
+
+在ULyraCameraMode_ThirdPerson::PreventCameraPenetration中使用
