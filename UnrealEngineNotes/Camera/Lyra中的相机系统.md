@@ -271,4 +271,256 @@ ULyraCameraMode_ThirdPerson::ULyraCameraMode_ThirdPerson()
 
 ```
 
-在ULyraCameraMode_ThirdPerson::PreventCameraPenetration中使用
+在ULyraCameraMode_ThirdPerson::PreventCameraPenetration中使用，核心逻辑如下
+可以理解到这个探测器的概念就是定义了每一条从相机位置发出的射线的配置。打到的物体有LyraCameraMode_ThirdPerson_Statics::NAME_IgnoreCameraCollision 的tag会加入忽略，每个不可忽略的物体都会累加进最终的相机偏移。
+```cpp
+void ULyraCameraMode_ThirdPerson::PreventCameraPenetration(class AActor const& ViewTarget, FVector const& SafeLoc, FVector& CameraLoc, float const& DeltaTime, float& DistBlockedPct, bool bSingleRayOnly)  
+{
+#if ENABLE_DRAW_DEBUG
+	DebugActorsHitDuringCameraPenetration.Reset();
+#endif
+
+	float HardBlockedPct = DistBlockedPct;
+	float SoftBlockedPct = DistBlockedPct;
+
+	FVector BaseRay = CameraLoc - SafeLoc;
+	FRotationMatrix BaseRayMatrix(BaseRay.Rotation());
+	FVector BaseRayLocalUp, BaseRayLocalFwd, BaseRayLocalRight;
+
+	BaseRayMatrix.GetScaledAxes(BaseRayLocalFwd, BaseRayLocalRight, BaseRayLocalUp);
+
+	float DistBlockedPctThisFrame = 1.f;
+
+	int32 const NumRaysToShoot = bSingleRayOnly ? FMath::Min(1, PenetrationAvoidanceFeelers.Num()) : PenetrationAvoidanceFeelers.Num();
+	FCollisionQueryParams SphereParams(SCENE_QUERY_STAT(CameraPen), false, nullptr/*PlayerCamera*/);
+
+	SphereParams.AddIgnoredActor(&ViewTarget);
+
+	//TODO ILyraCameraTarget.GetIgnoredActorsForCameraPentration();
+	//if (IgnoreActorForCameraPenetration)
+	//{
+	//	SphereParams.AddIgnoredActor(IgnoreActorForCameraPenetration);
+	//}
+
+	FCollisionShape SphereShape = FCollisionShape::MakeSphere(0.f);
+	UWorld* World = GetWorld();
+
+	for (int32 RayIdx = 0; RayIdx < NumRaysToShoot; ++RayIdx)
+	{
+		FLyraPenetrationAvoidanceFeeler& Feeler = PenetrationAvoidanceFeelers[RayIdx];
+		if (Feeler.FramesUntilNextTrace <= 0)
+		{
+			// calc ray target
+			FVector RayTarget;
+			{
+				FVector RotatedRay = BaseRay.RotateAngleAxis(Feeler.AdjustmentRot.Yaw, BaseRayLocalUp);
+				RotatedRay = RotatedRay.RotateAngleAxis(Feeler.AdjustmentRot.Pitch, BaseRayLocalRight);
+				RayTarget = SafeLoc + RotatedRay;
+			}
+
+			// cast for world and pawn hits separately.  this is so we can safely ignore the 
+			// camera's target pawn
+			SphereShape.Sphere.Radius = Feeler.Extent;
+			ECollisionChannel TraceChannel = ECC_Camera;		//(Feeler.PawnWeight > 0.f) ? ECC_Pawn : ECC_Camera;
+
+			// do multi-line check to make sure the hits we throw out aren't
+			// masking real hits behind (these are important rays).
+
+			// MT-> passing camera as actor so that camerablockingvolumes know when it's the camera doing traces
+			FHitResult Hit;
+			const bool bHit = World->SweepSingleByChannel(Hit, SafeLoc, RayTarget, FQuat::Identity, TraceChannel, SphereShape, SphereParams);
+#if ENABLE_DRAW_DEBUG
+			if (World->TimeSince(LastDrawDebugTime) < 1.f)
+			{
+				DrawDebugSphere(World, SafeLoc, SphereShape.Sphere.Radius, 8, FColor::Red);
+				DrawDebugSphere(World, bHit ? Hit.Location : RayTarget, SphereShape.Sphere.Radius, 8, FColor::Red);
+				DrawDebugLine(World, SafeLoc, bHit ? Hit.Location : RayTarget, FColor::Red);
+			}
+#endif // ENABLE_DRAW_DEBUG
+
+			Feeler.FramesUntilNextTrace = Feeler.TraceInterval;
+
+			const AActor* HitActor = Hit.GetActor();
+
+			if (bHit && HitActor)
+			{
+				bool bIgnoreHit = false;
+
+				if (HitActor->ActorHasTag(LyraCameraMode_ThirdPerson_Statics::NAME_IgnoreCameraCollision))
+				{
+					bIgnoreHit = true;
+					SphereParams.AddIgnoredActor(HitActor);
+				}
+
+				// Ignore CameraBlockingVolume hits that occur in front of the ViewTarget.
+				if (!bIgnoreHit && HitActor->IsA<ACameraBlockingVolume>())
+				{
+					const FVector ViewTargetForwardXY = ViewTarget.GetActorForwardVector().GetSafeNormal2D();
+					const FVector ViewTargetLocation = ViewTarget.GetActorLocation();
+					const FVector HitOffset = Hit.Location - ViewTargetLocation;
+					const FVector HitDirectionXY = HitOffset.GetSafeNormal2D();
+					const float DotHitDirection = FVector::DotProduct(ViewTargetForwardXY, HitDirectionXY);
+					if (DotHitDirection > 0.0f)
+					{
+						bIgnoreHit = true;
+						// Ignore this CameraBlockingVolume on the remaining sweeps.
+						SphereParams.AddIgnoredActor(HitActor);
+					}
+					else
+					{
+#if ENABLE_DRAW_DEBUG
+						DebugActorsHitDuringCameraPenetration.AddUnique(TObjectPtr<const AActor>(HitActor));
+#endif
+					}
+				}
+				
+				if (!bIgnoreHit)
+				{
+					float const Weight = Cast<APawn>(Hit.GetActor()) ? Feeler.PawnWeight : Feeler.WorldWeight;
+					float NewBlockPct = Hit.Time;
+					NewBlockPct += (1.f - NewBlockPct) * (1.f - Weight);
+
+					// Recompute blocked pct taking into account pushout distance.
+					NewBlockPct = ((Hit.Location - SafeLoc).Size() - CollisionPushOutDistance) / (RayTarget - SafeLoc).Size();
+					DistBlockedPctThisFrame = FMath::Min(NewBlockPct, DistBlockedPctThisFrame);
+
+					// This feeler got a hit, so do another trace next frame
+					Feeler.FramesUntilNextTrace = 0;
+
+#if ENABLE_DRAW_DEBUG
+					DebugActorsHitDuringCameraPenetration.AddUnique(TObjectPtr<const AActor>(HitActor));
+#endif
+				}
+			}
+
+			if (RayIdx == 0)
+			{
+				// don't interpolate toward this one, snap to it
+				// assumes ray 0 is the center/main ray 
+				HardBlockedPct = DistBlockedPctThisFrame;
+			}
+			else
+			{
+				SoftBlockedPct = DistBlockedPctThisFrame;
+			}
+		}
+		else
+		{
+			--Feeler.FramesUntilNextTrace;
+		}
+	}
+
+	if (bResetInterpolation)
+	{
+		DistBlockedPct = DistBlockedPctThisFrame;
+	}
+	else if (DistBlockedPct < DistBlockedPctThisFrame)
+	{
+		// interpolate smoothly out
+		if (PenetrationBlendOutTime > DeltaTime)
+		{
+			DistBlockedPct = DistBlockedPct + DeltaTime / PenetrationBlendOutTime * (DistBlockedPctThisFrame - DistBlockedPct);
+		}
+		else
+		{
+			DistBlockedPct = DistBlockedPctThisFrame;
+		}
+	}
+	else
+	{
+		if (DistBlockedPct > HardBlockedPct)
+		{
+			DistBlockedPct = HardBlockedPct;
+		}
+		else if (DistBlockedPct > SoftBlockedPct)
+		{
+			// interpolate smoothly in
+			if (PenetrationBlendInTime > DeltaTime)
+			{
+				DistBlockedPct = DistBlockedPct - DeltaTime / PenetrationBlendInTime * (DistBlockedPct - SoftBlockedPct);
+			}
+			else
+			{
+				DistBlockedPct = SoftBlockedPct;
+			}
+		}
+	}
+
+	DistBlockedPct = FMath::Clamp<float>(DistBlockedPct, 0.f, 1.f);
+	if (DistBlockedPct < (1.f - ZERO_ANIMWEIGHT_THRESH))
+	{
+		CameraLoc = SafeLoc + (CameraLoc - SafeLoc) * DistBlockedPct;
+	}
+}
+```
+
+# ALyraPlayerCameraManager
+继承于引擎的APlayerCameraManager
+## 新增加的变量
+后面介绍
+```cpp
+private:  
+    /** The UI Camera Component, controls the camera when UI is doing something important that gameplay doesn't get priority over. */  
+    UPROPERTY(Transient)  
+    TObjectPtr<ULyraUICameraManagerComponent> UICamera;
+```
+
+## 重写的函数
+- UpdateViewTarget：World的Tick链路中的一环，如果UICamera需要更新ViewTarget，会在基类Super::UpdateViewTarget(OutVT, DeltaTime)后调用UICamera->UpdateViewTarget(OutVT, DeltaTime); ^862edc
+- DisplayDebug：先调用基类APlayerCameraManager的DisplayDebug，然后调用CameraComponent的DrawDebug；
+
+## 新增加的函数
+- GetUICameraComponent：返回UICamera。
+
+# ULyraUICameraManagerComponent
+作为ALyraPlayerCameraManager上的成员变量，在其构造函数中被构造
+```cpp
+ALyraPlayerCameraManager::ALyraPlayerCameraManager(const FObjectInitializer& ObjectInitializer)  
+    : Super(ObjectInitializer)  
+{  
+    DefaultFOV = LYRA_CAMERA_DEFAULT_FOV;  
+    ViewPitchMin = LYRA_CAMERA_DEFAULT_PITCH_MIN;  
+    ViewPitchMax = LYRA_CAMERA_DEFAULT_PITCH_MAX;  
+  
+    UICamera = CreateDefaultSubobject<ULyraUICameraManagerComponent>(UICameraComponentName);  
+}
+```
+## 新增内部变量
+```cpp
+UPROPERTY(Transient)  
+TObjectPtr<AActor> ViewTarget;  
+  
+UPROPERTY(Transient)  
+bool bUpdatingViewTarget;
+```
+
+- ViewTarget：在ULyraUICameraManagerComponent::SetViewTarget中设置成传入的参数，接着再传给Owner，也就是ALyraPlayerCameraManager，然后再SetViewTarget。
+- bUpdatingViewTarget：在IsSettingViewTarget中返回，但是用到这个函数的地方在项目中没有找到。
+
+## 新增的函数
+- NeedsToUpdateViewTarget()：默认返回一个false。为真的时候会![[Lyra中的相机系统#^862edc]]
+- UpdateViewTarget(struct FTViewTarget& OutVT, float DeltaTime)：空实现，会在上面流程中调用。需要我们根据项目去拓展了。
+- OnShowDebugInfo(AHUD* HUD, UCanvas* Canvas, const FDebugDisplayInfo& DisplayInfo, float& YL, float& YPos)：空实现，
+  在构造函数中绑定到AHud的OnShowDebugInfo委托上
+  ```cpp
+    ULyraUICameraManagerComponent::ULyraUICameraManagerComponent()
+	{
+		bWantsInitializeComponent = true;
+	
+		if (!HasAnyFlags(RF_ClassDefaultObject))
+		{
+			// Register "showdebug" hook.
+			if (!IsRunningDedicatedServer())
+			{
+				AHUD::OnShowDebugInfo.AddUObject(this, &ThisClass::OnShowDebugInfo);
+			}
+		}
+	}
+  ```
+
+- 剩下三个函数虽然定义了但是没有调用的地方：
+  ```cpp
+    bool IsSettingViewTarget() const { return bUpdatingViewTarget; }  
+	AActor* GetViewTarget() const { return ViewTarget; }  
+	void SetViewTarget(AActor* InViewTarget, FViewTargetTransitionParams TransitionParams = FViewTargetTransitionParams());
+  ```
